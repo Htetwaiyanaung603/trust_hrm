@@ -1,0 +1,76 @@
+﻿@model HRMPj.Models.LeaveRequest
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LeaveRequest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentYear)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentYear)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LeaveFromDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LeaveFromDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LeaveToDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LeaveToDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LeaveTotalDay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LeaveTotalDay)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HalfDay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HalfDay)
+        </dd>
+     
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UnPaidLeaveStatus)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UnPaidLeaveStatus)
+        </dd>
+        <dt>
+           
+        <dt>
+            @Html.DisplayNameFor(model => model.LeaveType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LeaveType.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

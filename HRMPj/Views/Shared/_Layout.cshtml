@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <environment include="Development">
+
+        <link rel="stylesheet" href="~/css/main.css" />
+        <link rel="stylesheet" href="~/scss/style.css" />
+        <link href="~/js/dcalendar.picker.css" rel="stylesheet" />
+        <link href="~/lib/jquery/fullclander/fullcalendar.css" rel="stylesheet" />
+        @*<link href="~/Themes/demos.css" rel="stylesheet" />
+            <link href="~/Themes/jquery.ui.all.css" rel="stylesheet" />*@
+    </environment>
+</head>
+<body>
+    <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
+        <partial name="_Header" />
+        <partial name="_CookieConsentPartial" />
+        <div class="app-main">
+            <partial name="_LeftMenu" />
+            <!--Start Body-->
+            <div class="app-main__outer">
+                <div class="app-main__inner">
+                    @RenderBody()
+                </div>
+                <partial name="_Footer" />
+            </div>
+            <!-- End Start Body-->
+        </div>
+    </div>
+
+
+
+
+
+    <environment include="Development">
+
+        <script src="~/js/jquery-3.3.1.js"></script>
+
+        <script src="~/lib/jquery/jquery-ui-1.8.23.custom.min.js"></script>
+        <script src="~/lib/jquery/fullclander/fullcalendar.min.js"></script>
+        <script src="~/js/main.js"></script>
+        <script src="~/js/dataTable/jquery.dataTables.min.js"></script>
+        <script src="~/js/dataTable/dataTables.buttons.min.js"></script>
+        <script src="~/js/dataTable/buttons.flash.min.js"></script>
+        <script src="~/js/dataTable/buttons.html5.min.js"></script>
+        <script src="~/js/dataTable/buttons.print.min.js"></script>
+        <script src="~/js/dataTable/buttons.colVis.min.js"></script>
+        <script src="~/js/dataTable/dataTables.select.min.js"></script>
+        <script src="~/js/dataTable/jszip.min.js"></script>
+        <script src="~/js/dataTable/pdfmake.min.js"></script>
+        <script src="~/js/dataTable/vfs_fonts.js"></script>
+        <script src="~/js/dataTable/dataTables.js"></script>
+        <script src="~/js/sweetalert.min.js"></script>
+        @*<script src="~/Scripts/jquery.ui.core.js"></script>
+            <script src="~/Scripts/jquery.ui.datepicker.js"></script>
+            <script src="~/Scripts/jquery.ui.widget.js"></script>
+            <script src="~/Scripts/jquery-1.7.1.js"></script>*@
+        @*<script src="~/js/dcalendar.picker.js"></script>*@
+
+        @*<script src="~/lib/jquery/jquery-1.8.1.min.js"></script>*@
+
+        <script>
+
+
+            function toggleFullScreen() {
+                if (!document.fullscreenElement && // alternative standard method
+                    !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { // current working methods
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen();
+                    } else if (document.documentElement.msRequestFullscreen) {
+                        document.documentElement.msRequestFullscreen();
+                    } else if (document.documentElement.mozRequestFullScreen) {
+                        document.documentElement.mozRequestFullScreen();
+                    } else if (document.documentElement.webkitRequestFullscreen) {
+                        document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
+                }
+            }
+        </script>
+    </environment>
+    @RenderSection("Scripts", required: false)
+
+
+</body>
+</html>

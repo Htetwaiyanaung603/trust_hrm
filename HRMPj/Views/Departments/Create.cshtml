@@ -1,0 +1,61 @@
+﻿@model HRMPj.Models.Department
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Department";
+}
+
+
+<div class="main-card mb-3 card">
+    <div class="card-header">
+        <div class="media flex-wrap w-100 align-items-center">
+            <div class=" media-body ml-3">
+                <div class="text-muted large">
+                    @ViewData["Title"]
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>@ViewBag.Message</div>
+            <div class="position-relative row form-group">
+                <label asp-for="Name" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-5">
+                    <input asp-for="Name" id="Name" placeholder="Enter name" type="text" class="form-control" />
+                    <span asp-validation-for="Name  " class="text-danger"></span>
+
+                </div>
+            </div>
+            @*<div class="position-relative row form-group">
+                <label asp-for="CreatedDate" class="col-sm-2 col-form-label">CreatedDate</label>
+                <div class="col-sm-5">
+                    <input asp-for="CreatedDate" id="CreatedDate" placeholder="Enter date" type="text" class="form-control" />
+                </div>
+            </div>*@
+            <div class="position-relative row form-group">
+                <label asp-for="BranchId" class="col-sm-2 col-form-label">BranchId</label>
+                <div class="col-sm-5">
+                    <select asp-for="BranchId" id="BranchId" class="form-control" asp-items="ViewBag.BranchId"></select>
+                    <span asp-validation-for="BranchId " class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <input type="submit" value="Create" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                    <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+ 
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

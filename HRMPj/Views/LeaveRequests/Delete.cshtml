@@ -1,0 +1,104 @@
+﻿@model HRMPj.Models.LeaveRequest
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-page-title">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading">
+            <div class="page-title-icon">
+                <i class="pe-7s-graph text-success">
+                </i>
+            </div>
+            <div>
+                Leave Request
+                <div class="page-title-subheading">
+                    Are You Sure Do You Want To Delete This?
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+    <li class="nav-item">
+        <a role="tab" class="nav-link active" id="tab-0" data-toggle="tab" href="https://demo.dashboardpack.com/architectui-html-pro/elements-buttons-icons.html#tab-content-0">
+            <span>Delete</span>
+        </a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CurrentYear)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CurrentYear)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.LeaveFromDate)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.LeaveFromDate)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.LeaveToDate)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.LeaveToDate)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.LeaveTotalDay)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.LeaveTotalDay)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.HalfDay)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.HalfDay)
+                        </dd>
+                      
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Status)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UnPaidLeaveStatus)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UnPaidLeaveStatus)
+                        </dd>
+                      
+                        <dt>
+                            @Html.DisplayNameFor(model => model.LeaveType)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.LeaveType.Id)
+                        </dd>
+                    </dl>
+
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="submit" value="Delete" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" /> |
+                        <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

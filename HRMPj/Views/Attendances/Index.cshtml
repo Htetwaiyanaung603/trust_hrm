@@ -1,0 +1,179 @@
+﻿@model IEnumerable<HRMPj.Models.Attendance>
+
+@{
+
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+
+<div class="app-page-title">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading">
+            <div class="page-title-icon">
+                <i class="pe-7s-medal icon-gradient bg-tempting-azure">
+                </i>
+            </div>
+            <div>
+                <h2>Index</h2>
+                <div class="page-title-subheading">
+                    Choose between regular React Bootstrap tables or advanced dynamic ones.
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<p>
+    <a asp-action="SearchEmployeeForAttendance" class="mb-2 mr-2 btn-icon btn-pill btn btn-primary">Create New</a>
+</p>
+
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <form asp-action="Index" method="post">
+
+                    <div class="row">@*<div class="col-sm-12 col-md-6"><div class="dataTables_length" id="example_length"><label>Show <select name="example_length" aria-controls="example" class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="example_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example"></label></div></div></div><div class="row">*@
+                    <div class="form-row">
+                        <div class="col-md-5">
+                            <label>Branch Id</label>
+                            <select  class="form-control" id="BranchId" asp-items="@ViewBag.BranchId">
+                                <option>----Select Branch----</option>
+                            </select>
+                        </div>
+
+
+                        <div class="col-md-5">
+                            <label>Department Id</label>
+                            <select  class="form-control" id="DepartmentId"></select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-5">
+                            <label>From Date</label>
+                            <input type="date" class="form-control" />
+                        </div>
+                        <div class="col-md-5">
+                            <label>To Date</label>
+                            <input type="date" class="form-control" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="col-md-5">
+                        <div class="position-relative form-group">
+                            <input type="submit" value="Save" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                        </div>
+                    </div>
+                </form>
+                    <div class="col-sm-12">
+                        <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+
+                            <thead>
+                                <tr>
+                                    <th>
+                                        AttendanceDate
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        CreatedDate
+                                    </th>
+                                    <th>
+                                        CreatedBy
+                                    </th>
+
+                                    <th>
+                                        BranchId
+                                    </th>
+                                    <th>
+                                        DepartmentId
+                                    </th>
+                                    <th>
+                                        EmployeeInfo
+                                    </th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in @ViewBag.Employee)
+    {
+                                    <tr>
+                                        <td>
+                                            @item.AttendanceDate
+                                        </td>
+                                        <td>
+                                            @item.Status
+                                        </td>
+
+                                        <td>
+                                            @item.CreatedDate
+                                        </td>
+                                        <td>
+                                            @item.CreatedBy
+                                        </td>
+                                        <td>
+                                            @item.BranchId
+                                        </td>
+                                        <td>
+                                            @item.DepartmentId
+                                        </td>
+
+                                        <td>
+                                            @item.EmployeeInfo.EmployeeName
+                                        </td>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Edit</a> |
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Details</a> |
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+            </div>@*<div class="col-sm-12 col-md-5"><div class="dataTables_info" id="example_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="example_previous"><a href="#" aria-controls="example" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="example" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="example_next"><a href="#" aria-controls="example" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>*@
+        </div>
+    </div>
+
+  
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $("#BranchId").on("change", function () {
+
+            var param = this.value;
+                    $.ajax({
+            contentType: 'application/json; charset=utf-8',
+                        type: "GET",
+                        url: '/Branches/GetDepartmentList?BranchId=' + param,
+
+                        success: function (data) {
+
+                    var html = '<option>--Select--</option>';
+                    var len = data.length;
+                    if (len == 0) {
+                        alert("error");
+                    }
+                    else {
+                        for (var i = 0; i < len; i++) {
+                            html += '<option value="' + data[i].Id + '">'
+                                + data[i].Name
+                                + '</option>';
+                        }
+                                $('#DepartmentId').html(html);
+                        if (typeof (callback) == "function") {
+                            callback();
+                        }
+                    }
+
+                },
+                        complete: function () {
+                }
+            });
+        });
+    });
+        </script>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

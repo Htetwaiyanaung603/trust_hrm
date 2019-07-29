@@ -1,0 +1,75 @@
+﻿@model HRMPj.Models.Branch
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="app-page-title">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading">
+            <div class="page-title-icon">
+                <i class="pe-7s-graph text-success">
+                </i>
+            </div>
+            <div>
+                Branch
+                <div class="page-title-subheading">
+                    Build whatever layout you need with our Architect framework.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+    <li class="nav-item">
+        <a role="tab" class="nav-link active" id="tab-0" data-toggle="tab" href="https://demo.dashboardpack.com/architectui-html-pro/elements-buttons-icons.html#tab-content-0">
+            <span>Edit</span>
+        </a>
+    </li>
+</ul>
+@*<h2 class="nav-link active">Create</h2>*@
+<div class="tab-content">
+    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                @*<div class="row">
+                    <div class="col-md-4">*@
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Id" />
+                            <div class="position-relative form-group">
+                                <label asp-for="BranchName" class="control-label"></label>
+                                <input asp-for="BranchName" class="form-control" />
+                                <span asp-validation-for="BranchName" class="text-danger"></span>
+                            </div>
+                            <div class="position-relative form-group">
+                                <label asp-for="Address" class="control-label"></label>
+                                <input asp-for="Address" class="form-control" />
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                            <div class="position-relative form-group">
+                                <label asp-for="CreatedDate" class="control-label"></label>
+                                <input asp-for="CreatedDate" class="form-control" />
+                                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                            </div>
+                            <div class="position-relative form-group">
+                                <label asp-for="CompanyId" class="control-label"></label>
+                                <select asp-for="CompanyId" class="form-control" asp-items="ViewBag.CompanyId"></select>
+                                <span asp-validation-for="CompanyId" class="text-danger"></span>
+                            </div>
+                            <div class="position-relative form-group">
+                                <input type="submit" value="Save" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                                <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                            </div>
+                        </form>
+                    @*</div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+             
+
+                @section Scripts {
+                    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+                }

@@ -1,0 +1,138 @@
+﻿@model HRMPj.Models.OverTime
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "OverTimes";
+}
+
+
+<div class="main-card mb-3 card">
+    <div class="card-header">
+        <div class="media flex-wrap w-100 align-items-center">
+            <div class=" media-body ml-3">
+                <div class="text-muted large">
+                    @ViewData["Title"]
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>@ViewBag.Message</div>
+            <div class="position-relative row form-group">
+                <label asp-for="OTDate" class="col-sm-2 col-form-label">OT Date</label>
+                <div class="col-sm-5">
+                    <input asp-for="OTDate" id="datepicker" placeholder="Enter date" type="date" class="form-control" />
+                    <span asp-validation-for="OTDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="OTStartTime" class="col-sm-2 col-form-label">OT Start Time</label>
+                <div class="col-sm-4">
+                    <input asp-for="OTStartTime" id="OTStartTime" placeholder="Enter time" type="text" class="form-control" />
+                    <span asp-validation-for="OTStartTime" class="text-danger"></span>
+                </div>
+                <label asp-for="OTEndTime" class="col-sm-2 col-form-label">OT End Time</label>
+                <div class="col-sm-4">
+                    <input asp-for="OTEndTime" id="OTEndTime" placeholder="Enter time" type="text" class="form-control" />
+                    <span asp-validation-for="OTEndTime" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="position-relative row form-group">
+                <label asp-for="Status" class="col-sm-2 col-form-label">Status</label>
+                <div class="col-sm-5">
+                    <textarea asp-for="Status" id="Status" placeholder="Enter status" type="text" class="form-control"></textarea>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="OTTime" class="col-sm-2 col-form-label">OT Time(Min)</label>
+                <div class="col-sm-5">
+                    <input asp-for="OTTime" id="OTTime" placeholder="Enter time" type="text" class="form-control" />
+                    <span asp-validation-for="OTTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="Year" class="col-sm-2 col-form-label">Year</label>
+                <div class="col-sm-5">
+                    <input asp-for="Year" id="Year" placeholder="Year" type="text" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="FromEmployeeInfoId" class="col-sm-2 col-form-label">FromEmployeeInfoId</label>
+                <div class="col-sm-4">
+                    <select asp-for="FromEmployeeInfoId" id="FromEmployeeInfoId" class="form-control" asp-items="ViewBag.FromEmployeeInfoId"></select>
+                </div>
+                <label asp-for="ToEmployeeInfoId" class="col-sm-2 col-form-label">ToEmployeeInfoId</label>
+                <div class="col-sm-4">
+                    <select asp-for="ToEmployeeInfoId" id="ToEmployeeInfoId" class="form-control" asp-items="ViewBag.ToEmployeeInfoId"></select>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <input type="submit" value="Create" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                    <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+  
+
+      
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#OTStartTime,#OTEndTime').on('change', function () {
+
+                var start_time = $('#OTStartTime').val();
+                var end_time = $('#OTEndTime').val();
+                //alert("s = " + start_time + "e = " + end_time);
+                if (start_time != "" && end_time != "") {
+                    //alert("Calculate");
+                    var start = start_time;
+                    var end = end_time;
+                    s = start.split(':');
+                    e = end.split(':');
+                    min = e[1] - s[1];
+                    hour_carry = 0;
+                    if (min < 0) {
+                        min += 60;
+                        hour_carry += 1;
+                    }
+                    hour = e[0] - s[0] - hour_carry;
+                    min += hour * 60;
+                    //min = ((min / 60)*100).toString();
+                    //diff = hour + ":" + min;
+                    diff = min;
+                    //var hrs = end.getHours() - start.getHours();
+                    //var min = end.getMinutes() - start.getMinutes();
+
+
+                    //var hour_carry = 0;
+                    //var minutes_carry = 0;
+                    //if (min < 0) {
+                    //    min += 60;
+                    //    hour_carry += 1;
+                    //}
+                    //hrs = hrs - hour_carry;
+
+
+
+
+                    $('#OTTime').val(diff);
+                }
+                else {
+                    $('#OTTime').val("");
+                }
+            });
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

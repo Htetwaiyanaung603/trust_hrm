@@ -1,0 +1,82 @@
+﻿@model HRMPj.Models.Bonus
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-page-title">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading">
+            <div class="page-title-icon">
+                <i class="pe-7s-graph text-success">
+                </i>
+            </div>
+            <div>
+                Bonus 
+                <div class="page-title-subheading">
+                    Are You Sure Do You Want To Delete This?
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+    <li class="nav-item">
+        <a role="tab" class="nav-link active" id="tab-0" data-toggle="tab" href="https://demo.dashboardpack.com/architectui-html-pro/elements-buttons-icons.html#tab-content-0">
+            <span>Delete</span>
+        </a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Year)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Year)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Month)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Month)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedDate)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedDate)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedBy)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedBy)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.EmployeeInfo)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.EmployeeInfo.Id)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.BonusType)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.BonusType.Id)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                <div>
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Edit</a> |
+                    <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                </div>

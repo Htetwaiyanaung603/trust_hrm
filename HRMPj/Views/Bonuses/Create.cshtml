@@ -1,0 +1,89 @@
+﻿@model HRMPj.Models.BonusViewModel
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Bonus";
+}
+
+
+<div class="main-card mb-3 card">
+    <div class="card-header">
+        <div class="media flex-wrap w-100 align-items-center">
+            <div class=" media-body ml-3">
+                <div class="text-muted large">
+                    @ViewData["Title"]
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>@ViewBag.Message</div>
+            @*<div class="position-relative row form-group">
+                    <label for="Year" class="col-sm-2 col-form-label">Year</label>
+                    <div class="col-sm-5">
+                        <input asp-for="Year" id="Year" placeholder="Enter year" type="text" class="form-control" />
+                        <span asp-validation-for="Year " class="text-danger"></span>
+
+                    </div>
+                </div>*@
+            <div class="position-relative row form-group">
+                <label for="Month" class="col-sm-2 col-form-label">Month</label>
+                <div class="col-sm-5">
+                    <select asp-for="Month" id="month" class="form-control">
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">Aprial</option>
+                        <option value="5">May</option>
+                        <option value="6">Junr</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <span asp-validation-for="Month " class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="EmployeeInfoId" class="col-sm-2 col-form-label">EmployeeInfoId</label>
+                <div class="col-sm-5">
+                    <select asp-for="EmployeeInfoId" id="EmployeeInfoId" class="form-control" asp-items="ViewBag.EmployeeInfoId"></select>
+                    <span asp-validation-for="EmployeeInfoId " class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="BonusTypeId" class="col-sm-2 col-form-label">BonusTypeId</label>
+                <div class="col-sm-5">
+                    <select asp-for="BonusTypeId" id="BonusTypeId" class="form-control" asp-items="ViewBag.BonusTypeId"></select>
+                    <span asp-validation-for="BonusTypeId" class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <input type="submit" value="Create" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                    <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            $("#month").val(@ViewBag.Month);
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

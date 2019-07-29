@@ -1,0 +1,122 @@
+﻿@model HRMPj.Models.PayRoll
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PayRoll</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PaymentDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BasicSalary)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BasicSalary)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OTFee)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OTFee)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalAllowence)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalAllowence)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Bonus)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Bonus)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LoanAmount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LoanAmount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LateDebuct)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LateDebuct)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PenaltyFee)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PenaltyFee)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxFee)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TaxFee)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Saving)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Saving)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NetPay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NetPay)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Month)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Month)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PrintStatus)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PrintStatus)
+        </dd>
+ 
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeInfo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeInfo.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

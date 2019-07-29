@@ -1,0 +1,63 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "New User Account";
+}
+
+
+
+<div class="main-card mb-3 card">
+    <div class="card-header">
+        <div class="media flex-wrap w-100 align-items-center">
+            <div class=" media-body ml-3">
+                <div class="text-muted large">
+                    @ViewData["Title"]
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="position-relative row form-group">
+                <label class="col-sm-2 col-form-label" asp-for="Input.Email"></label>
+                <div class="col-sm-5">
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label class="col-sm-2 col-form-label" asp-for="Input.Password"></label>
+                <div class="col-sm-5">
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label class="col-sm-2 col-form-label" asp-for="Input.ConfirmPassword"></label>
+                <div class="col-sm-5">
+                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label class="col-sm-2 col-form-label">Employee</label>
+                <div class="col-sm-5">
+                    <select asp-for="Input.EmployeeId" asp-items="Model.EmpList" class="form-control"></select>
+                    <span asp-validation-for="Input.EmployeeId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    @*<button type="submit" class="btn btn-primary ">Register</button>*@
+                    <input type="submit" value="Register" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

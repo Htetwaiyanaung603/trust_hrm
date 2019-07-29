@@ -1,0 +1,100 @@
+﻿@model HRMPj.Models.Resign
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Resign";
+}
+
+
+<div class="main-card mb-3 card">
+    <div class="card-header">
+        <div class="media flex-wrap w-100 align-items-center">
+            <div class=" media-body ml-3">
+                <div class="text-muted large">
+                    @ViewData["Title"]
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>@ViewBag.Message</div>
+            <div class="position-relative row form-group">
+                <label asp-for="ResignDate" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-5">
+                    <input asp-for="ResignDate" class="form-control" />
+                    <span asp-validation-for="ResignDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="ResignStatus" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-5">
+                    <input asp-for="ResignStatus" class="form-control" />
+                    <span asp-validation-for="ResignStatus" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="Comment" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-5">
+                    <textarea asp-for="Comment" class="form-control"></textarea>
+                    <span asp-validation-for="Comment" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="Remark" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-5">
+                    <input asp-for="Remark" class="form-control" />
+                    <span asp-validation-for="Remark" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="CreatedDate" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-5">
+                    <input asp-for="CreatedDate" class="form-control" />
+                    <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="ApprovedDate" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-5">
+                    <input asp-for="ApprovedDate" class="form-control" />
+                    <span asp-validation-for="ApprovedDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="Status" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-5">
+                    <input asp-for="Status" class="form-control" />
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="Year" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-5">
+                    <input asp-for="Year" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="EmployeeInfoId" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-5">
+                    <select asp-for="EmployeeInfoId" class="form-control" asp-items="ViewBag.EmployeeInfoId"></select>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <input type="submit" value="Create" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                    <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,66 @@
+﻿@model HRMPj.Models.Branch
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Branch";
+}
+
+
+<div class="main-card mb-3 card">
+    <div class="card-header">
+        <div class="media flex-wrap w-100 align-items-center">
+            <div class=" media-body ml-3">
+                <div class="text-muted large">
+                    @ViewData["Title"]
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>@ViewBag.Message</div>
+            <div class="position-relative row form-group">
+                <label for="BranchName" class="col-sm-2 col-form-label">BranchName</label>
+                <div class="col-sm-5">
+                    <input asp-for="BranchName" id="BranchName" placeholder="Enter name" type="text" class="form-control" />
+                    <span asp-validation-for="BranchName " class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="Address" class="col-sm-2 col-form-label">Address</label>
+                <div class="col-sm-5">
+                    <input asp-for="Address" id="Address" placeholder="Enter address" type="text" class="form-control" />
+                                        <span asp-validation-for="Address " class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="CompanyId" class="col-sm-2 col-form-label">CompanyId</label>
+                <div class="col-sm-5">
+                    <select asp-for="CompanyId" id="CompanyId" class="form-control" asp-items="ViewBag.CompanyId">
+                        <option value="">--Select--</option>
+                    </select>
+                    <span asp-validation-for="CompanyId " class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <input type="submit" value="Create" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                    <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

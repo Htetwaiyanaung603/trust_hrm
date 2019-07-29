@@ -1,0 +1,230 @@
+﻿@model HRMPj.Models.LeaveRequestViewModel
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Leave Request";
+}
+
+
+<div class="main-card mb-3 card">
+    <div class="card-header">
+        <div class="media flex-wrap w-100 align-items-center">
+            <div class=" media-body ml-3">
+                <div class="text-muted large">
+                    @ViewData["Title"]
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>@ViewBag.Message</div>
+
+            <div class="position-relative row form-group">
+                <label asp-for="FromEmployeeInfoId " class="col-sm-2 col-form-label">FromEmployeeInfoId</label>
+                <div class="col-sm-5">
+                    <select asp-for="FromEmployeeInfoId " id="EmpId" class="form-control" asp-items="ViewBag.FromEmployeeInfoId"></select>
+                    <span asp-validation-for="FromEmployeeInfoId " class="text-danger"></span>
+
+                </div>
+            </div>
+
+            <div class="position-relative row form-group">
+                <label asp-for="UnPaidLeaveStatus" class="col-sm-2 col-form-label"></label>
+                <input asp-for="UnPaidLeaveStatus" type="checkbox" onclick="showHide(this)" />
+                <span asp-validation-for="UnPaidLeaveStatus" class="text-danger"></span>
+
+            </div>
+            <div id="UnpaidLead">
+                <div class="position-relative row form-group">
+                    <label asp-for="LeaveTypeId" class="col-sm-2 col-form-label">LeaveTypeId</label>
+                    <div class="col-sm-5">
+                        <select asp-for="LeaveTypeId" class="form-control" asp-items="ViewBag.LeaveTypeId">
+                            <option value="">--Select--</option>
+                        </select>
+                        <span asp-validation-for="LeaveTypeId " class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="position-relative row form-group">
+                    <label asp-for="LeaveRemainDay " class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-5">
+                        <input asp-for="LeaveRemainDay " id="LeaveRemainDay" placeholder="Enter LeaveRemainDay" type="text" class="form-control" value="0" />
+                        <span asp-validation-for="LeaveRemainDay" class="text-danger"></span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+
+                <label asp-for="LeaveFromDate" class="col-sm-2 col-form-label">LeaveFromDate</label>
+                <div class="col-sm-4">
+                    <input asp-for="LeaveFromDate" id="LeaveFromDate" placeholder="Enter date" type="date" class="form-control" onchange="calculate()" />
+                    <span asp-validation-for="LeaveFromDate" class="text-danger"></span>
+
+                </div>
+
+                <label asp-for="LeaveToDate" class="col-sm-2  col-form-label">LeaveToDate</label>
+                <div class="col-sm-4">
+                    <input asp-for="LeaveToDate" id="LeaveToDate" placeholder="Enter date" type="date" class="form-control" onchange="calculate()" />
+                    <span asp-validation-for="LeaveToDate" class="text-danger"></span>
+
+                </div>
+
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="HalfDay " class="col-sm-2 col-form-label"></label>
+                <input type="checkbox" asp-for="HalfDay" onclick="calculate()" />
+                <span asp-validation-for="HalfDay" class="text-danger"></span>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="LeaveTotalDay" class="col-sm-2 col-form-label">LeaveTotalDay</label>
+                <div class="col-sm-5">
+                    <input asp-for="LeaveTotalDay" id="LeaveTotalDay" placeholder="Enter day" type="text" class="form-control" />
+                    <span asp-validation-for="LeaveTotalDay" class="text-danger"></span>
+
+                </div>
+            </div>
+
+
+
+
+            <div class="position-relative row form-group">
+                <label asp-for="Description" class="col-sm-2 col-form-label">Description</label>
+                <div class="col-sm-5">
+
+                    <textarea asp-for="Description" id="Description" placeholder="Enter description" type="text" class="form-control"></textarea>
+                    <span asp-validation-for="Description " class="text-danger"></span>
+
+                </div>
+            </div>
+
+
+
+            <div class="position-relative row form-group">
+                <label asp-for="ToEmployeeInfoId" class="col-sm-2 col-form-label">ToEmployeeInfoId</label>
+                <span asp-validation-for="UnPaidLeaveStatus" class="text-danger"></span>
+
+
+                <div class="col-sm-5">
+
+                    <select asp-for="ToEmployeeInfoId " id="ToEmpId" class="form-control" asp-items="ViewBag.ToEmployeeInfoId"></select>
+                    <span asp-validation-for="ToEmployeeInfoId  " class="text-danger"></span>
+
+
+                </div>
+            </div>
+            <div class="position-relative row form-group ">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <input type="submit" value="Create" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                    <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+
+    <script>
+        $(function () {
+            $("#LeaveTypeId").on("change", function () {
+
+
+                $("#LeaveRemainDay").val("");
+
+                var param = this.value;
+                var fromEmp = $("#EmpId").val();
+                $.ajax({
+
+                    contentType: 'application/json; charset=utf-8',
+                    type: "GET",
+                    url: '/LeaveRequests/GetLeaveRemainDay?LeaveTypeId=' + param + "&FromEmpId=" + fromEmp,
+
+                    success: function (data) {
+
+
+                        $('#LeaveRemainDay').val(data);
+
+                        if (typeof (callback) == "function") {
+                            callback();
+                        }
+
+
+                    },
+                    complete: function () {
+
+                    }
+
+                });
+            });
+
+        });
+
+
+
+
+        // To Hide Deduct Amount When Form Loaded
+        function showHide(checkbox) {
+
+            if ($(checkbox).is(":checked")) {
+                $("#UnpaidLead").hide(500);
+            }
+            else {
+
+                //var ele = document.getElementsByName("HalfStatus");
+                //for (var i = 0; i < ele.length; i++)
+
+
+
+                $("#UnpaidLead").show(500);
+
+            }
+            calculate();
+        }
+
+        function calculate() {
+
+            var d1 = new Date($('#LeaveFromDate').val());
+            var d2 = new Date($('#LeaveToDate').val());
+
+            var oneDay = 24 * 60 * 60 * 1000;
+            var diff = 0;
+            if (d1 < d2 || (d1 - d2) == 0) {
+
+                diff = (d2 - d1) / (oneDay);
+
+                diff++;
+
+
+
+                if ($("#HalfDay").is(":checked") && diff > 0) {
+
+                    diff = diff - 0.5;
+                }
+
+
+                if (!$("#UnPaidLeaveStatus").is(":checked")) {
+                    if ($('#LeaveRemainDay').val() < diff || $('#LeaveRemainDay').val() == 0) {
+                        alert()
+                        // swal("Rejected", "Your Leave Remain day is limited!", "error");
+                        diff = 0;
+                    }
+                }
+            }
+            $("#LeaveTotalDay").val(diff);
+
+
+        }
+
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

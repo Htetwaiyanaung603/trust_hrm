@@ -1,0 +1,156 @@
+﻿@model IEnumerable<HRMPj.Models.LeaveRequest>
+
+@{
+    ViewData["Title"] = "Leave Request View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<p>
+    <a asp-action="Create" class="mb-2 mr-2 btn-icon btn-pill btn btn-primary">Create New</a>
+</p>
+<div class="main-card mb-3 card">
+    <div class="card-header">
+        <div class="media flex-wrap w-100 align-items-center">
+            <div class=" media-body ml-3">
+                <div class="text-muted large">
+                    @ViewData["Title"]
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+
+                        <thead>
+                            <tr>
+
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LeaveFromDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LeaveToDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LeaveTotalDay)
+                                </th>
+
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UnPaidLeaveStatus)
+                                </th>
+
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LeaveType)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FromEmployeeInfo)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LeaveFromDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LeaveToDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LeaveTotalDay)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UnPaidLeaveStatus)
+                                    </td>
+
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LeaveType.TypeName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ToEmployeeInfo.EmployeeName)
+                                    </td>
+
+                                    <td>
+                                        @if (@item.Status == "Pending")
+                                        {
+                                            <button class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" onclick="LeaveStatus(@item.Id,'Approve')"><i class="fa fa-check"></i></button> 
+                                            <button class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-danger" onclick="LeaveStatus(@item.Id,'Reject')"><i class="fa fa-times"></i></button>
+                                        }
+                                        @*<a class="@item.Id mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" onclick="LeaveStatus(@item.Id,'Approve')">Approve</a> |
+                                        <a class="@item.Id mb-2 mr-2 btn-icon btn-pill btn btn-outline-danger" onclick="LeaveStatus(@item.Id,'Reject')">Reject</a>*@
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script>
+        $(function () {
+            $('#example').DataTable();
+        });
+
+     function LeaveStatus(id,status,btn) {
+                $.ajax({
+
+                    contentType: 'application/json; charset=utf-8',
+                    type: "GET",
+                    url: '/LeaveRequests/LeaveRequestChangeStatus?LeaveRequestId=' + id + "&Status=" + status,
+
+                    success: function (data) {
+                        if (data) {
+
+                            $('.' + id).remove();
+                        }
+                        else {
+                            alet("error");
+                        }
+
+                        if (typeof (callback) == "function") {
+                            callback();
+                        }
+
+
+                    },
+                    complete: function () {
+
+                    }
+
+                });
+            }
+    </script>
+
+
+
+
+
+
+}
+
+

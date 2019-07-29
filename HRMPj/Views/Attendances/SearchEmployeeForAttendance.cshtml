@@ -1,0 +1,162 @@
+﻿@model HRMPj.Models.SearchViewModel
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Allowance Type";
+}
+
+<script>
+
+function backoperation()
+{
+window.location.href = "@Url.Action("SearchEmployeeForAttendance", "Attendances")";
+}
+</script>
+<div class="main-card mb-3 card">
+    <div class="card-header">
+        <div class="media flex-wrap w-100 align-items-center">
+            <div class=" media-body ml-3">
+                <div class="text-muted large">
+                    @ViewData["Title"]
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-action="SearchEmployeeForAttendance" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>@ViewBag.Message</div>
+            <div class="position-relative row form-group">
+                <label class="col-sm-2 col-form-label">Branch Id</label>
+                <div class="col-sm-4">
+                    <select name="BranchId" class="form-control" id="BranchId" asp-items="@ViewBag.BranchId">
+                        <option>----Select Branch----</option>
+                    </select>
+                </div>
+                <label class="col-sm-2 col-form-label">Department Id</label>
+                <div class="col-sm-4">
+                    <select name="DepartmentId" class="form-control" id="DepartmentId">
+                        <option>--Select--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label class="col-sm-2 col-form-label">Attendance Date</label>
+                <div class="col-sm-4">
+                    <input type="date" id="month" name="AttendanceDate" class="form-control" />
+                  
+                </div>
+            </div>
+
+            <div class="position-relative row form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+
+                    <input type="submit" value="Search" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                    <button type="button" onclick="backoperation()" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Go Back</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div class="tab-content">
+    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <form asp-action="SaveAttendance" method="post">
+                    <table style="width: 100%;" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+                        <thead>
+                            <tr>
+                                <th>
+                                    EmployeeName
+                                </th>
+                                <th>
+                                    Designation
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i = 0;
+                            }
+                            @foreach (var item in @ViewBag.Employee)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.EmployeeName
+                                        <input type="hidden" name="emp[@i].EmployeeId" value="@item.Id">
+                                        <input type="hidden" name="emp[@i].AttendanceDate" value="@ViewBag.AttDate">
+                                        <input type="hidden" name="emp[@i].BranchId" value="@ViewBag.branch">
+                                        <input type="hidden" name="emp[@i].DepartmentId" value="@ViewBag.department">
+                                    </td>
+                                    <td>
+                                        @item.Designation.Name
+                                    </td>
+                                    <td>
+                                        <select name="emp[@i].Status" class="form-control">
+                                            <option value="Present">Present</option>
+                                            <option value="Absent">Absent</option>
+                                            <option value="Leave">Leave</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                    <input type="submit" value="Attend" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                    <a asp-action="GetAttendance" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+        $(document).ready(function () {
+            $("#BranchId").on("change", function () {
+
+                var param = this.value;
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: "GET",
+                    url: '/Branches/GetDepartmentList?BranchId=' + param,
+
+                    success: function (data) {
+
+                        var html = '<option>--Select--</option>';
+                        var len = data.length;
+                        if (len == 0) {
+                            alert("error");
+                        }
+                        else {
+                            for (var i = 0; i < len; i++) {
+                                html += '<option value="' + data[i].Id + '">'
+                                    + data[i].Name
+                                    + '</option>';
+                            }
+                            $('#DepartmentId').html(html);
+                            if (typeof (callback) == "function") {
+                                callback();
+                            }
+                        }
+
+                    },
+                    complete: function () {
+                    }
+                });
+            });
+        });
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

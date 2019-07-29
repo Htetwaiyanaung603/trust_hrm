@@ -1,0 +1,173 @@
+﻿@model HRMPj.Models.SearchViewModel
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<hr />
+<div class="app-page-title">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading">
+            <div class="page-title-icon">
+                <i class="pe-7s-graph text-success">
+                </i>
+            </div>
+            <div>
+                Attendance
+                @*<div class="page-title-subheading">
+                        Build whatever layout you need with our Architect framework.
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+@*<ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+    <li class="nav-item">
+        <a role="tab" class="nav-link" id="tab-0" data-toggle="tab" href="#tab-content-0" aria-selected="false">
+            <span>Create</span>
+        </a>
+    </li>*@
+
+<div class="tab-content">
+    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <form asp-action="Search" method="post">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-row">
+                        <div class="col-md-5">
+                            <div class="position-relative form-group">
+                                <label>Branch Id</label>
+                                <select asp-for="BranchId" class="form-control" id="BranchId" asp-items="@ViewBag.BranchId">
+                                    <option>----Select Branch----</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-md-5">
+                            <div class="position-relative form-group">
+                                <label>Department Id</label>
+                                <select asp-for="DepartmentId" class="form-control" id="DepartmentId"></select>
+                            </div>
+
+                        </div>
+                        <div class="col-md-5">
+                            <div class="position-relative form-group">
+                                <input type="submit" value="Save" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="position-relative form-group">
+                            <label for="EmployeeInfoId" class="">EmployeeInfoId</label>
+                            <select asp-for="EmployeeInfoId" id="EmployeeInfoId" class="form-control" asp-items="ViewBag.EmployeeInfoId"></select>
+                        </div>
+                        <div class="position-relative form-group">
+                            <label for="AttendanceDate" class="">AttendanceDate</label>
+                            <input asp-for="AttendanceDate" id="AttendanceDate" placeholder="Enter date" type="text" class="form-control" />
+                        </div>
+                        <div class="position-relative form-group">
+                            <label asp-for="Status" class=""></label>
+                            <input asp-for="Status" class="form-control" />
+                        </div>
+
+
+                        <div class="position-relative form-group">
+                            <label for="CreatedBy" class="">CreatedBy</label>
+                            <input asp-for="CreatedBy" id="CreatedBy" placeholder="With a placeholder" type="text" class="form-control" />
+                        </div>
+
+
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                            <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                        </div>*@
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="tab-content">
+    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <table style="width: 100%;" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+                    <thead>
+                        <tr>
+                            <th>
+                                EmployeeName
+                            </th>
+                            <th>
+                                Designation
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in @ViewBag.Employee)
+                        {
+                        <tr>
+                            <td>
+                                @item.EmployeeName
+                            </td>
+                            <td>
+                                @item.Designation.Name
+                            </td>
+                            <td>
+                                <select class="form-control">
+                                    <option value="Present">Present</option>
+                                    <option value="Absent">Absent</option>
+                                </select>
+                            </td>
+                        </tr>
+                        } 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#BranchId").on("change", function () {
+
+                var param = this.value;
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: "GET",
+                    url: '/Branches/GetDepartmentList?BranchId=' + param,
+
+                    success: function (data) {
+
+                        var html = '<option>--Select--</option>';
+                        var len = data.length;
+                        if (len == 0) {
+                            alert("error");
+                        }
+                        else {
+                            for (var i = 0; i < len; i++) {
+                                html += '<option value="' + data[i].Id + '">'
+                                    + data[i].Name
+                                    + '</option>';
+                            }
+                            $('#DepartmentId').html(html);
+                            if (typeof (callback) == "function") {
+                                callback();
+                            }
+                        }
+
+                    },
+                    complete: function () {
+                    }
+                });
+            });
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
