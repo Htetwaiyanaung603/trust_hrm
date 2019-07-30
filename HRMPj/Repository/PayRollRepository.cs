@@ -23,37 +23,32 @@ namespace HRMPj.Repository
             OverTimeSetting cList = context.OverTimeSettings.Last();
             
             List<PayRollViewModel> po = new List<PayRollViewModel>();
-            PayRollCreateViewModel din = new PayRollCreateViewModel();
-            PayRollAllowanceViewModel pav = new PayRollAllowanceViewModel();
+          
                 foreach (var item in employee)
                 {
                 PayRollViewModel p = new PayRollViewModel();
-                din = new PayRollCreateViewModel();
-                pav = new PayRollAllowanceViewModel();
+              
                 //string otsql = "select ISNULL(SUM(OTTime),0)*(" + cList.Amount / 60 + ") As Amount from OverTime where Month(OTDate)=" + month + " AND Year(OTDate)=" + year + " AND FromEmployeeInfoId =" + item.Id;
 
                 //     din = context.Query<PayRollCreateViewModel>().FromSql(otsql).Single();
                 //p.OTFee = din.Amount;
                 decimal ad = context.OverTimes.Where(o => o.OTDate.Month == month && o.OTDate.Year == year && o.FromEmployeeInfoId == item.Id).Sum(i => i.OTTime * Convert.ToDecimal(cList.Amount / 60));
                 p.OTFee = ad;
-
-
                 // string all1 ="select ISNULL(SUM(at.AmmountPerDay),0) As AllowanceAmount from AllowanceDetail ad join AllowancdType at on at.Id = ad.AllowanceTypeId where ad.Month =" + month + " AND ad.Year =" + year + " AND ad.EmployeeInfoId =" + item.Id + " AND at.Status='Monthly'";
                 //        pav = context.Query<PayRollAllowanceViewModel>().FromSql(all1).Single();
-                // // var allm = context.AllowanceDetails.FromSql("select ISNULL(SUM(at.AmmountPerDay), 0) from AllowanceDetail ad join AllowancdType at on at.Id = ad.AllowanceTypeId where ad.Month = " + month + " AND ad.Year = " + year + " AND ad.EmployeeInfoId = " + item.Id + " AND at.Status = 'Monthly'").Single();
-              
+                // // var allm = context.AllowanceDetails.FromSql("select ISNULL(SUM(at.AmmountPerDay), 0) from AllowanceDetail ad join AllowancdType at on at.Id = ad.AllowanceTypeId where ad.Month = " + month + " AND ad.Year = " + year + " AND ad.EmployeeInfoId = " + item.Id + " AND at.Status = 'Monthly'").Single();             
                 long allwnceAmountMonthly = context.AllowanceDetails.Include(c => c.AllowanceType).Where(b => b.Month == month.ToString() && b.Year == year.ToString() && b.EmployeeInfoId == item.Id && b.AllowanceType.Status == "Monthly").Sum(i => i.AllowanceType.AmmountPerDay);
-                 // int atttCount = context.Attendances.Where(a => a.AttendanceDate.Month == month && a.AttendanceDate.Year == year && a.EmployeeInfoId == item.Id && a.Status == "Present").ToList().Count();
+                int atttCount = context.Attendances.Where(a => a.AttendanceDate.Month == month && a.AttendanceDate.Year == year && a.EmployeeInfoId == item.Id && a.Status == "Present").ToList().Count();
+                long allowanceAmountDaily = context.AllowanceDetails.Include(c => c.AllowanceType).Where(b => b.Month == month.ToString() && b.Year == year.ToString() && b.EmployeeInfoId == item.Id && b.AllowanceType.Status == "Daily").Sum(i => i.AllowanceType.AmmountPerDay * atttCount);
                // string all2 = "select COUNT(Id) from Attendance a where Month(a.AttendanceDate) =" + month + " And Year(a.AttendanceDate)=" + year + " And a.EmployeeInfoId =" + item.Id + " And a.Status = 'Present'";
                // pav = context.Query<PayRollAllowanceViewModel>().FromSql(all2).Single();
 
                // string all3 = "select ISNULL(SUM(at.AmmountPerDay), 0) *" + atttCount + " from AllowanceDetail ad join AllowancdType at on at.Id = ad.AllowanceTypeId where ad.Month =" + month + " And ad.Year =" + year + " And ad.EmployeeInfoId =" + item.Id + " And at.Status = 'Daily'";
                // pav = context.Query<PayRollAllowanceViewModel>().FromSql(all3).Single();
-
-                p.TotalAllowence = allwnceAmountMonthly ;
-
-
-
+                p.TotalAllowence = allwnceAmountMonthly + allowanceAmountDaily;
+                long bonusPayroll = context.Bonuses.Include(c => c.BonusType).Where(b => b.Month == month.ToString() && b.Year == year.ToString() && b.EmployeeInfoId == item.Id).Sum(i => i.BonusType.Amount);
+                p.Bonus = bonusPayroll;
+                //long basicSalary=context.EmployeeInfos.Where(a=>a.)
 
 
 
