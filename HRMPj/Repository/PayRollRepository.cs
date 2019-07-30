@@ -41,7 +41,7 @@ namespace HRMPj.Repository
                 // string all1 ="select ISNULL(SUM(at.AmmountPerDay),0) As AllowanceAmount from AllowanceDetail ad join AllowancdType at on at.Id = ad.AllowanceTypeId where ad.Month =" + month + " AND ad.Year =" + year + " AND ad.EmployeeInfoId =" + item.Id + " AND at.Status='Monthly'";
                 //        pav = context.Query<PayRollAllowanceViewModel>().FromSql(all1).Single();
                 // // var allm = context.AllowanceDetails.FromSql("select ISNULL(SUM(at.AmmountPerDay), 0) from AllowanceDetail ad join AllowancdType at on at.Id = ad.AllowanceTypeId where ad.Month = " + month + " AND ad.Year = " + year + " AND ad.EmployeeInfoId = " + item.Id + " AND at.Status = 'Monthly'").Single();
-                int allowa=context.AllowanceDetails.GroupJoin(context.AllowanceTypes,e=>e.AllowanceTypeId,s=>s.Id).
+             //   int allowa=context.AllowanceDetails.GroupJoin(context.AllowanceTypes,e=>e.AllowanceTypeId,s=>s.Id).
                //int atttCount = context.Attendances.Where(a => a.AttendanceDate.Month == month && a.AttendanceDate.Year == year && a.EmployeeInfoId == item.Id && a.Status == "Present").ToList().Count();
                // string all2 = "select COUNT(Id) from Attendance a where Month(a.AttendanceDate) =" + month + " And Year(a.AttendanceDate)=" + year + " And a.EmployeeInfoId =" + item.Id + " And a.Status = 'Present'";
                // pav = context.Query<PayRollAllowanceViewModel>().FromSql(all2).Single();
