@@ -9,7 +9,8 @@ namespace HRMPj.Models
     {
         public long Id { get; set; }
         public DateTime PaymentDate { get; set; }
-        public decimal BasicSalary { get; set; }
+        public long BasicSalary { get; set; }
+       
         public decimal OTFee { get; set; }
         public decimal TotalAllowence { get; set; }
         public decimal Bonus { get; set; }

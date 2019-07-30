@@ -22,13 +22,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>@ViewBag.Message</div>
             @*<div class="position-relative row form-group">
-                    <label for="Year" class="col-sm-2 col-form-label">Year</label>
-                    <div class="col-sm-5">
-                        <input asp-for="Year" id="Year" placeholder="Enter year" type="text" class="form-control" />
-                        <span asp-validation-for="Year " class="text-danger"></span>
+            <label for="Year" class="col-sm-2 col-form-label">Year</label>
+            <div class="col-sm-5">
+                <input asp-for="Year" id="Year" placeholder="Enter year" type="text" class="form-control" />
+                <span asp-validation-for="Year " class="text-danger"></span>
 
-                    </div>
-                </div>*@
+            </div>
+        </div>*@
             <div class="position-relative row form-group">
                 <label for="Month" class="col-sm-2 col-form-label">Month</label>
                 <div class="col-sm-5">
@@ -49,6 +49,14 @@
                     <span asp-validation-for="Month " class="text-danger"></span>
 
                 </div>
+            </div>
+            <div class="position-relative row form-group">
+            <label for="year" class="col-sm-2 col-form-label">year</label>
+            <div class="col-sm-5">
+                <input asp-for="Year" id="year" placeholder="enter year" type="text" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+
+            </div>
             </div>
             <div class="position-relative row form-group">
                 <label for="EmployeeInfoId" class="col-sm-2 col-form-label">EmployeeInfoId</label>
