@@ -19,5 +19,7 @@ namespace HRMPj.Repository
         bool GetExit(long id);
         List<LeaveRequest> RetrieveLeaveRequestList();
         Task UpdateStatus(long LeaveRequestId,string status);
+        List<LeaveRequest> GetStatus(DateTime LeaveFromDate, DateTime LeaveToDate, string Status); 
+
     }
 }

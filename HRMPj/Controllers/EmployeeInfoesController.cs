@@ -148,7 +148,8 @@ namespace HRMPj.Controllers
                             Document = teaList,
                             DepartmentId=employee.DepartmentId,
                             DesignationId=employee.DesignationId,
-                            BranchId=employee.BranchId
+                            BranchId=employee.BranchId,
+                            BasicSalary=employee.BasicSalary
                         };
                         await employeeInfoRepository.Save(str);
 

@@ -21,23 +21,16 @@ namespace HRMPj.Models
         public decimal TotalAllowence { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Bonus { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal LoanAmount { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal LateDebuct { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
+       
         public decimal PenaltyFee { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal TaxFee { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal Saving { get; set; }
+      
         [Column(TypeName = "decimal(18, 2)")]
         public decimal NetPay { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public string Year { get; set; }
         public string Month { get; set; }
-        public Boolean PrintStatus { get; set; }
+        
         
         [ForeignKey("EmployeeInfoId")]
         public long EmployeeInfoId { get; set; }

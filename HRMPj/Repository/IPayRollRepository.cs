@@ -17,5 +17,8 @@ namespace HRMPj.Repository
         List<PayRoll> GetDelete();
         PayRoll GetDeleteList(long id);
         bool GetExit(long id);
+        List<PayRollViewModel> ClaculatePayRoll(int year, int month, List<EmployeeInfo> employee);
+      
+    
     }
 }

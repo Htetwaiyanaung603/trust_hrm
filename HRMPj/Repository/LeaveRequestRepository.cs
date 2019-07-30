@@ -77,11 +77,19 @@ namespace HRMPj.Repository
             return bb;
         }
 
+        public List<LeaveRequest> GetStatus(DateTime LeaveFromDate, DateTime LeaveToDate, string Status)
+        {
+            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            long EmployeeId = context.EmployeeInfos.Where(e => e.UserId == userId).SingleOrDefault().Id;
+            List<LeaveRequest> leave = context.LeaveRequests.Include(l => l.LeaveType).Include(l => l.FromEmployeeInfo).Where(l => l.ToEmployeeInfoId == EmployeeId && l.Status == Status && l.LeaveFromDate.Date >= LeaveFromDate.Date && l.LeaveToDate.Date <= LeaveToDate.Date).ToList();
+            return leave;
+        }
+
         public List<LeaveRequest> RetrieveLeaveRequestList()
         {
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             long EmployeeId = context.EmployeeInfos.Where(e => e.UserId == userId).SingleOrDefault().Id;
-            List<LeaveRequest> leave = context.LeaveRequests.Include(l => l.LeaveType).Include(l => l.FromEmployeeInfo).Where(l => l.ToEmployeeInfoId == EmployeeId).ToList();
+            List<LeaveRequest> leave = context.LeaveRequests.Include(l => l.LeaveType).Include(l => l.FromEmployeeInfo).Where(l => l.ToEmployeeInfoId == EmployeeId && l.Status == LeaveStatus.Pending.ToString()).ToList();
             return leave;
         }
 

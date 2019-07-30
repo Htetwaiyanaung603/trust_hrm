@@ -1,35 +1,29 @@
-﻿@model HRMPj.Models.AttendanceSearchViewModel
-
-
+﻿@model HRMPj.Models.EmpPayRollViewModel
 @{
 
+
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+
 }
-
 <script>
-
 function backoperation()
 {
-window.location.href = "@Url.Action("GetAttendance", "Attendances")";
+window.location.href = "@Url.Action("GetEmpView", "PayRolls")";
 }
 </script>
-
-<p>
-    <a asp-action="SearchEmployeeForAttendance" class="mb-2 mr-2 btn-icon btn-pill btn btn-primary">Create New</a>
-</p>
-
 <div class="tab-content">
     <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
         <div class="main-card mb-3 card">
             <div class="card-body">
                 <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                    <form asp-action="GetAttendance" method="post">
+                    <form asp-action="GetEmpView" method="post">
 
                         @*<div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="example_length"><label>Show <select name="example_length" aria-controls="example" class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="example_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example"></label></div></div></div><div class="row">*@
                         <div class="form-row">
                             <div class="col-md-5">
                                 <label>Branch Id</label>
-                                <select name="BranchId" class="form-control" id="BranchId" asp-items="@ViewBag.BranchId">
+                                <select name="BranchId" class="form-control" id="BranchId" asp-items="@ViewBag.Branch">
                                     <option>----Select Branch----</option>
                                 </select>
                             </div>
@@ -42,24 +36,41 @@ window.location.href = "@Url.Action("GetAttendance", "Attendances")";
                                 </select>
                             </div>
                         </div>
+                        <div class="position-relative row form-group">
+                            <div class="col-md-5">
+                                <label>Department Id</label>
+                                <select name="DesignationId" class="form-control" id="DesignationId">
+                                    <option>----Select Designation----</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-row">
                             <div class="col-md-5">
-                                <label>From Date</label>
-                                <input name="FromDate" id="month" type="date" class="form-control" />
-
+                                <label>Month</label>
+                                <select asp-for="Month" id="month" class="form-control">
+                                    <option value=1>January</option>
+                                    <option value=2>February</option>
+                                    <option value=3>March</option>
+                                    <option value=4>Aprial</option>
+                                    <option value=5>May</option>
+                                    <option value=6>June</option>
+                                    <option value=7>July</option>
+                                    <option value=8>August</option>
+                                    <option value=9>September</option>
+                                    <option value=10>October</option>
+                                    <option value=11>November</option>
+                                    <option value=12>December</option>
+                                </select>
                             </div>
                             <div class="col-md-5">
-                                <label>To Date</label>
-                                <input name="ToDate" type="date" class="form-control" />
+                                <label>Year</label>
+                               <input name="Year" id="year" class="form-control" />
                             </div>
                         </div>
                         <br />
                         <div class="position-relative row form-group">
-                           
-                                <input type="submit" value="Search" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
-                                <button type="button" onclick="backoperation()" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Go Back</button>
-
-                          
+                            <input type="submit" value="Search" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                            <button type="button" onclick="backoperation()" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Go Back</button>
                         </div>
                     </form>
                 </div>
@@ -67,7 +78,6 @@ window.location.href = "@Url.Action("GetAttendance", "Attendances")";
         </div>
     </div>
 </div>
-
 <div class="tab-content">
     <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
         <div class="main-card mb-3 card">
@@ -79,13 +89,12 @@ window.location.href = "@Url.Action("GetAttendance", "Attendances")";
                             <th>
                                 EmployeeName
                             </th>
-                            @foreach (var ite in @ViewBag.DayList)
-                            {
-                                <th>
-                                    @ite
-                                </th>
-                            }
-
+                            <th>
+                                OT Field
+                            </th>
+                            <th>
+                                Allowance Field
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,27 +102,15 @@ window.location.href = "@Url.Action("GetAttendance", "Attendances")";
                         {
                             <tr>
                                 <td>
-                                    @item.EmployeeName
+                                    @item.EmployeeInfoId
                                 </td>
-                                @foreach (var status in item.AttDateList)
-                                {
-                                    <td>
-                                        @if (@status == "Present")
-                                        {<i class="fa fa-check" />}
-                                        else
-                                          if (@status == "Absent")
-                                        {
-
-                                          <i class="fa fa-times" />
-                                        }
-                                        else if(@status == "Leave")
-                                        {
-                                            <b> L </b>
-                                        }
-                                    </td>
-                                }
-
-
+                                <td>
+                                    @item.OTFee
+                                </td>
+                                <td>
+                                    @item.TotalAllowence
+                                </td>
+                            
                             </tr>
                         }
                     </tbody>
@@ -123,10 +120,8 @@ window.location.href = "@Url.Action("GetAttendance", "Attendances")";
     </div>
 </div>
 
-@*<div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="example_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="example_previous"><a href="#" aria-controls="example" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="example" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="example_next"><a href="#" aria-controls="example" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>*@
 
 
-@*</div>*@
 @section Scripts {
     <script>
         $(document).ready(function () {
@@ -136,14 +131,14 @@ window.location.href = "@Url.Action("GetAttendance", "Attendances")";
                 $.ajax({
                     contentType: 'application/json; charset=utf-8',
                     type: "GET",
-                    url: '/Branches/GetDepartmentList?BranchId=' + param,
+                    url: '/EmployeeInfoes/GetDepartmentList?BranchId=' + param,
 
                     success: function (data) {
 
                         var html = '<option>--Select--</option>';
                         var len = data.length;
                         if (len == 0) {
-                            alert("error");
+                            $('#DepartmentId').html(html);
                         }
                         else {
                             for (var i = 0; i < len; i++) {
@@ -163,17 +158,43 @@ window.location.href = "@Url.Action("GetAttendance", "Attendances")";
                 });
             });
         });
-     
     </script>
-
-
     <script>
-        $(function () {
+        $(document).ready(function () {
+            $("#DepartmentId").on("change", function () {
 
-            $('#example').DataTable();
+                var param = this.value;
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: "GET",
+                    url: '/EmployeeInfoes/GetDesignationList?DepartmentId=' + param,
+
+                    success: function (data) {
+
+                        var html = '<option>--Select--</option>';
+                        var len = data.length;
+                        if (len == 0) {
+                            $('#DesignationId').html(html);
+                        }
+                        else {
+                            for (var i = 0; i < len; i++) {
+                                html += '<option value="' + data[i].Id + '">'
+                                    + data[i].Name
+                                    + '</option>';
+                            }
+                            $('#DesignationId').html(html);
+                            if (typeof (callback) == "function") {
+                                callback();
+                            }
+                        }
+
+                    },
+                    complete: function () {
+                    }
+                });
+            });
         });
     </script>
-
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

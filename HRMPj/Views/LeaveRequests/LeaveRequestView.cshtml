@@ -22,8 +22,26 @@
     </div>
     <div class="card-body">
         <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4">
-            <div class="row">
-                <div class="col-sm-12">
+            <form asp-action="LeaveRequestView" method="post">
+               <label>Status</label>
+               <select name="Status" class="form-control">
+                   <option value="">---Select</option>
+                   <option value="Approve">Approve</option>
+                   <option value="Reject">Reject</option>
+                   <option value="Pending">Pending</option>
+               </select>
+                <label>From Date</label>
+                <input type="date" name="LeaveFromDate" class="form-control" />
+                <label>To Date</label>
+                <input type="date" name="LeaveToDate" class="form-control" />
+                <input type="submit" value="Search" class="form-control" />
+            </form>
+        </div>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
                     <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
 
                         <thead>
@@ -82,7 +100,11 @@
 
 
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.LeaveType.TypeName)
+
+                                        @if (item.LeaveType != null)
+                                        {
+                                           @Html.DisplayFor(modelItem => item.LeaveType.TypeName)
+                                        }
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.ToEmployeeInfo.EmployeeName)
@@ -91,8 +113,8 @@
                                     <td>
                                         @if (@item.Status == "Pending")
                                         {
-                                            <button class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" onclick="LeaveStatus(@item.Id,'Approve')"><i class="fa fa-check"></i></button> 
-                                            <button class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-danger" onclick="LeaveStatus(@item.Id,'Reject')"><i class="fa fa-times"></i></button>
+                                            <button class="@item.Id mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" onclick="LeaveStatus(@item.Id,'Approve')"><i class="fa fa-check"></i></button>
+                                            <button class="@item.Id mb-2 mr-2 btn-icon btn-pill btn btn-outline-danger" onclick="LeaveStatus(@item.Id,'Reject')"><i class="fa fa-times"></i></button>
                                         }
                                         @*<a class="@item.Id mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" onclick="LeaveStatus(@item.Id,'Approve')">Approve</a> |
                                         <a class="@item.Id mb-2 mr-2 btn-icon btn-pill btn btn-outline-danger" onclick="LeaveStatus(@item.Id,'Reject')">Reject</a>*@

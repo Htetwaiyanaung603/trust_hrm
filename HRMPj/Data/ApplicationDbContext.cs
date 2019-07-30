@@ -17,6 +17,9 @@ namespace HRMPj.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Query<PayRollCreateViewModel>();
+            modelBuilder.Query<PayRollAllowanceViewModel>();
+
             // modelBuilder.Entity<EmployeeInfo>()
             //.HasOne(i => i.Branch)
             //.WithMany(c => c.EmployeeInfo)

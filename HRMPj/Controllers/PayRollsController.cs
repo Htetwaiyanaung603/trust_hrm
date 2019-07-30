@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HRMPj.Data;
 using HRMPj.Models;
 using HRMPj.Repository;
+using Newtonsoft.Json;
 
 namespace HRMPj.Controllers
 {
@@ -15,10 +16,16 @@ namespace HRMPj.Controllers
     {
         private readonly IEmployeeInfoRepository employeeInfoRepository;
         private readonly IPayRollRepository payRollRepository;
-        public PayRollsController(IEmployeeInfoRepository e, IPayRollRepository a)
+        private readonly IBranchRepository branchRepository;
+        private readonly IDepartmentRepository departmentRepository;
+        private readonly IDesignationRepository designationRepository;
+        public PayRollsController(IEmployeeInfoRepository e, IPayRollRepository a,IBranchRepository b,IDepartmentRepository d,IDesignationRepository de)
         {
             this.payRollRepository = a;
             this.employeeInfoRepository = e;
+            this.branchRepository = b;
+            this.departmentRepository = d;
+            this.designationRepository = de;
 
         }
         //private readonly ApplicationDbContext _context;
@@ -34,7 +41,47 @@ namespace HRMPj.Controllers
            // var applicationDbContext = _context.PayRolls.Include(p => p.EmployeeInfo);
             return View(payRollRepository.GetDetail());
         }
+        public IActionResult GetEmpView()
+        {
+            ViewData["Branch"] =new SelectList(branchRepository.GetBranchList(), "Id", "BranchName");
+            List<EmployeeInfo> searchEmployee = new List<EmployeeInfo>();
+            ViewBag.Employee = searchEmployee;
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult GetEmpView(EmpPayRollViewModel search)
+        {
 
+            List<EmployeeInfo> searchEmployee = employeeInfoRepository.GetEmployeeListByBranchAndDepartmentIdAndDesignationId(search.BranchId, search.DepartmentId,search.DesignationId);
+            List<PayRollViewModel> o = payRollRepository.ClaculatePayRoll(search.Year, search.Month,searchEmployee);
+            ViewBag.Employee = o;
+            
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult GetDepartmentList(long BranchId)
+        {
+
+            List<Department> departmentList = departmentRepository.GetDepartmentListByBranchs(BranchId);
+            var d = JsonConvert.SerializeObject(departmentList, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            });
+            return Content(d, "application/json");
+        }
+        [HttpGet]
+        public IActionResult GetDesignationList(long DepartmentId)
+        {
+
+            List<Designation> designationlist = designationRepository.GetDesignationListByDepartmentId(DepartmentId);
+            var d = JsonConvert.SerializeObject(designationlist, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            });
+            return Content(d, "application/json");
+        }
         // GET: PayRolls/Details/5
         public IActionResult Details(long? id)
         {
@@ -67,7 +114,7 @@ namespace HRMPj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PaymentDate,BasicSalary,OTFee,TotalAllowence,Bonus,LoanAmount,LateDebuct,PenaltyFee,TaxFee,Saving,NetPay,CreatedDate,CreatedBy,Year,Month,PrintStatus,Claim,EmployeeInfoId")] PayRollViewModel payRoll)
+        public async Task<IActionResult> Create([Bind("Id,PaymentDate,BasicSalary,OTFee,TotalAllowence,Bonus,PenaltyFee,NetPay,EmployeeInfoId")] PayRollViewModel payRoll)
         {
             if (ModelState.IsValid)
             {
@@ -77,19 +124,13 @@ namespace HRMPj.Controllers
                     BasicSalary = payRoll.BasicSalary,
                     OTFee = payRoll.OTFee,
                     TotalAllowence = payRoll.TotalAllowence,
-                    Bonus = payRoll.Bonus,
-                    LoanAmount = payRoll.LoanAmount,
-                    LateDebuct = payRoll.LateDebuct,
+                    Bonus = payRoll.Bonus,                
                     NetPay = payRoll.NetPay,
-                    PenaltyFee = payRoll.PenaltyFee,
-                    TaxFee = payRoll.TaxFee,
-                    Year = payRoll.Year,
-                    Month = payRoll.Month,
-                    Saving = payRoll.Saving,
-                    PrintStatus = payRoll.PrintStatus,
-                  
-                    CreatedBy = payRoll.CreatedBy,
-                    CreatedDate = payRoll.CreatedDate,
+                    PenaltyFee = payRoll.PenaltyFee,                
+                    Year = DateTime.Now.Year.ToString(),
+                    Month = DateTime.Now.Month.ToString(),                 
+                    CreatedBy ="",
+                    CreatedDate = DateTime.Now,
                     EmployeeInfoId = payRoll.EmployeeInfoId
                 };
                 await payRollRepository.Save(pp);

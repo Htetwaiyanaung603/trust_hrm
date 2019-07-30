@@ -18,6 +18,7 @@ namespace HRMPj.Models
         public string NRC { get; set; }
         public string Nationality { get; set; }
         public string MartialStatus { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}")]
         public DateTime DateOfBirth { get; set; }
         public long MobilePhone { get; set; }
         public string CurrentAddress { get; set; }
@@ -25,9 +26,11 @@ namespace HRMPj.Models
         public long AccountNo { get; set; }
         public long ATMNumber { get; set; }
         public Boolean IsActive { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}")]
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public string UserId { get; set; }
+        public long BasicSalary { get; set; }
         public string EmployeeProfile { get; set; }
         [ForeignKey("BranchId")]
         public long BranchId { get; set; }

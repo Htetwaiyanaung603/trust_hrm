@@ -4,14 +4,16 @@ using HRMPj.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HRMPj.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190729081928_test26")]
+    partial class test26
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -497,6 +499,12 @@ namespace HRMPj.Migrations
 
                     b.Property<long>("EmployeeInfoId");
 
+                    b.Property<decimal>("LateDebuct")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("LoanAmount")
+                        .HasColumnType("decimal(18, 2)");
+
                     b.Property<string>("Month");
 
                     b.Property<decimal>("NetPay")
@@ -507,7 +515,16 @@ namespace HRMPj.Migrations
 
                     b.Property<DateTime>("PaymentDate");
 
-                    b.Property<decimal>("PenaltyFee");
+                    b.Property<decimal>("PenaltyFee")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<bool>("PrintStatus");
+
+                    b.Property<decimal>("Saving")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("TaxFee")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<decimal>("TotalAllowence")
                         .HasColumnType("decimal(18, 2)");

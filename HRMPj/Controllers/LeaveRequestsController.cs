@@ -35,7 +35,13 @@ namespace HRMPj.Controllers
         {
             return View(leaveRequestRepository.RetrieveLeaveRequestList());
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult LeaveRequestView(DateTime LeaveFromDate,DateTime LeaveToDate,string Status)
+        {
+            List<LeaveRequest> leave = leaveRequestRepository.GetStatus(LeaveFromDate, LeaveToDate, Status);
+            return View(leave);
+        }
 
         public IActionResult LeaveRequestChangeStatus(long LeaveRequestId, string status)
         {
