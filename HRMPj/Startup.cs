@@ -70,8 +70,13 @@ namespace HRMPj
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<ApplicationUser> userManager)
         {
+            /*using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                context.Database.Migrate();
+            }*/
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -82,13 +87,13 @@ namespace HRMPj
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            DbInitializer.SeedData(userManager);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
+           
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
