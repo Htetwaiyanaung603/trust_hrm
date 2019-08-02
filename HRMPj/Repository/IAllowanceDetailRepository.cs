@@ -16,5 +16,6 @@ namespace HRMPj.Repository
         AllowanceDetail GetDelete(long id);
         Task Delete(AllowanceDetail sa);
         bool GetExit(long id);
+        AllowanceDetail ffff(string month,string year,long empId,long allTypeId);
     }
 }

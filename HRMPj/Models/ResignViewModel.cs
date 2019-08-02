@@ -17,7 +17,8 @@ namespace HRMPj.Models
         public string Status { get; set; }
         public string Year { get; set; }
     
-        public long EmployeeInfoId { get; set; }
-       
+        public long FromEmployeeInfoId { get; set; }
+        public long ToEmployeeInfoId { get; set; }
+
     }
 }

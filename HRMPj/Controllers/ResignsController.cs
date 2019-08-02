@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HRMPj.Data;
 using HRMPj.Models;
 using HRMPj.Repository;
+using Newtonsoft.Json;
 
 namespace HRMPj.Controllers
 {
@@ -15,10 +16,12 @@ namespace HRMPj.Controllers
     {
         private readonly IEmployeeInfoRepository employeeInfoRepository;
         private readonly IResignRepository resignRepository;
-        public ResignsController(IEmployeeInfoRepository e, IResignRepository a)
+        private readonly IBranchRepository branchRepository;
+        public ResignsController(IEmployeeInfoRepository e, IResignRepository a,IBranchRepository b)
         {
             this.resignRepository = a;
             this.employeeInfoRepository = e;
+            this.branchRepository = b;
             
         }
         //    private readonly ApplicationDbContext _context;
@@ -34,7 +37,44 @@ namespace HRMPj.Controllers
            // var applicationDbContext = _context.Resigns.Include(r => r.EmployeeInfo);
             return View(resignRepository.GetDetail());
         }
+       
+        public IActionResult RequestView()
+        {
+            return View(resignRepository.RetrieveResignList());
+        }              
+        public IActionResult ResignChangeStatus(long ResignId, string status)
+        {
+             resignRepository.UpdateStatus(ResignId, status);
+            return Content("true", "application/json");
+        }
+        [HttpGet]
+        public IActionResult GetResignList()
+        {
+            ViewData["BranchId"] = new SelectList(branchRepository.GetBranchList(), "Id", "BranchName");
+            ViewBag.Employee = new List<EmpResignViewModel>();
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult GetResignList(EmpResignViewModel search)
+        {
 
+            List<EmployeeInfo> searchEmployee =resignRepository.GetEmpListById(search.BranchId, search.DepartmentId, search.DesignationId,search.EmployeeId);
+
+            ViewBag.Employee = searchEmployee;
+            return View();
+        }
+        [HttpGet]
+        public IActionResult GetEmployeeList(long DesignationId)
+        {
+
+            List<EmployeeInfo> employeeList = resignRepository.GetEmployeeListByDesignationId(DesignationId);
+            var d = JsonConvert.SerializeObject(employeeList, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            });
+            return Content(d, "application/json");
+        }
         // GET: Resigns/Details/5
         public IActionResult Details(long? id)
         {
@@ -58,7 +98,8 @@ namespace HRMPj.Controllers
         // GET: Resigns/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "EmployeeName");
+            ViewData["FromEmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "EmployeeName");
+            ViewData["ToEmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "EmployeeName");
             return View();
         }
 
@@ -67,28 +108,33 @@ namespace HRMPj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ResignDate,ResignStatus,Comment,Remark,CreatedDate,ApprovedDate,Status,Year,EmployeeInfoId")] ResignViewModel resign)
+        public async Task<IActionResult> Create([Bind("Id,ResignDate,ResignStatus,Comment,Remark,CreatedDate,ApprovedDate,Status,Year,FromEmployeeInfoId,ToEmployeeInfoId")] ResignViewModel resign)
         {
             if (ModelState.IsValid)
             {
                 Resign re = new Resign()
                 {
-                    ResignDate = resign.ResignDate,
+                    ResignDate = DateTime.Now,
                     ResignStatus = resign.ResignStatus,
                     Comment = resign.Comment,
                     Remark = resign.Remark,
-                    CreatedDate = resign.CreatedDate,
-                    ApprovedDate = resign.ApprovedDate,
-                    Status = resign.Status,
-                    Year = resign.Year,
-                    EmployeeInfoId = resign.EmployeeInfoId
+                    CreatedDate = DateTime.Now,
+                    ApprovedDate = DateTime.Now,
+                    Status = "Pending",
+                    Year = DateTime.Now.Year.ToString(),
+                   FromEmployeeInfoId=resign.FromEmployeeInfoId,
+                   ToEmployeeInfoId=resign.ToEmployeeInfoId
                 };
+              
+                
                 //_context.Add(resign);
                 //await _context.SaveChangesAsync();
                 await resignRepository.Save(re);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "Id", resign.EmployeeInfoId);
+            ViewData["FromEmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "Id",resign.FromEmployeeInfoId);
+
+            ViewData["ToEmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "Id", resign.ToEmployeeInfoId);
             return View(resign);
         }
 
@@ -106,7 +152,9 @@ namespace HRMPj.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "Id", resign.EmployeeInfoId);
+            ViewData["FromEmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "Id", resign.FromEmployeeInfoId);
+
+            ViewData["ToEmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "Id", resign.ToEmployeeInfoId);
             return View(resign);
         }
 
@@ -143,7 +191,6 @@ namespace HRMPj.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "Id", resign.EmployeeInfoId);
             return View(resign);
         }
 

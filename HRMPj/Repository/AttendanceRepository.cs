@@ -31,6 +31,10 @@ namespace HRMPj.Repository
             foreach (EmployeeInfo ei in blist)
             {
                 List<String> attList = context.Attendances.Where(a => a.AttendanceDate >= date1 && a.AttendanceDate <= date2 && a.EmployeeInfoId == ei.Id).OrderBy(a=>a.AttendanceDate).Select(a => a.Status).ToList();
+                if(attList==null)
+                {
+                    attList.Add("Absent");
+                }
                 AttendancdRecordViewModel attRecord = new AttendancdRecordViewModel()
                 {
                     EmployeeId = ei.Id,

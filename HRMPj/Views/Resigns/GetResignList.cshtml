@@ -1,0 +1,212 @@
+﻿@model IEnumerable<HRMPj.Models.EmpResignViewModel>
+
+@{
+
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+<script>
+function backoperation()
+{
+window.location.href = "@Url.Action("GetResignList", "Resigns")";
+}
+</script>
+<div class="tab-content">
+    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <form asp-action="GetResignList" method="post">
+                        <div class="form-row">
+                            <div class="col-md-5">
+                                <label>Branch Id</label>
+                                <select name="BranchId" class="form-control" id="BranchId" asp-items="@ViewBag.BranchId">
+                                    <option>----Select Branch----</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <label>Department Id</label>
+                                <select name="DepartmentId" class="form-control" id="DepartmentId">
+                                    <option>----Select Department----</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="position-relative row form-group">
+                            <div class="col-md-5">
+                                <label>Department Id</label>
+                                <select name="DesignationId" class="form-control" id="DesignationId">
+                                    <option>----Select Designation----</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <label>EmployeeName</label>
+                                <select name="EmployeeId" class="form-control" id="EmployeeId">
+                                    <option>----Select Employee----</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="position-relative row form-group">
+                            <input type="submit" value="Search" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                            <button type="button" onclick="backoperation()" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Go Back</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-content">
+    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+
+                <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                EmployeeName
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in @ViewBag.Employee)
+                        {
+                            <tr>
+                                <td>
+                                    @item.EmployeeName
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+                <div class="position-relative row form-group">
+                    <input type="submit" value="Resign" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                    <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#BranchId").on("change", function () {
+
+                var param = this.value;
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: "GET",
+                    url: '/EmployeeInfoes/GetDepartmentList?BranchId=' + param,
+
+                    success: function (data) {
+
+                        var html = '<option>--Select--</option>';
+                        var len = data.length;
+                        if (len == 0) {
+                            $('#DepartmentId').html(html);
+                        }
+                        else {
+                            for (var i = 0; i < len; i++) {
+                                html += '<option value="' + data[i].Id + '">'
+                                    + data[i].Name
+                                    + '</option>';
+                            }
+                            $('#DepartmentId').html(html);
+                            if (typeof (callback) == "function") {
+                                callback();
+                            }
+                        }
+
+                    },
+                    complete: function () {
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#DepartmentId").on("change", function () {
+
+                var param = this.value;
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: "GET",
+                    url: '/EmployeeInfoes/GetDesignationList?DepartmentId=' + param,
+
+                    success: function (data) {
+
+                        var html = '<option>--Select--</option>';
+                        var len = data.length;
+                        if (len == 0) {
+                            $('#DesignationId').html(html);
+                        }
+                        else {
+                            for (var i = 0; i < len; i++) {
+                                html += '<option value="' + data[i].Id + '">'
+                                    + data[i].Name
+                                    + '</option>';
+                            }
+                            $('#DesignationId').html(html);
+                            if (typeof (callback) == "function") {
+                                callback();
+                            }
+                        }
+
+                    },
+                    complete: function () {
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#DesignationId").on("change", function () {
+
+                var param = this.value;
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: "GET",
+                    url: '/Resigns/GetEmployeeList?DesignationId=' + param,
+
+                    success: function (data) {
+
+                        var html = '<option>--Select--</option>';
+                        var len = data.length;
+                        if (len == 0) {
+                            $('#EmployeeId').html(html);
+                        }
+                        else {
+                            for (var i = 0; i < len; i++) {
+                                html += '<option value="' + data[i].Id + '">'
+                                    + data[i].EmployeeName
+                                    + '</option>';
+                            }
+                            $('#EmployeeId').html(html);
+                            if (typeof (callback) == "function") {
+                                callback();
+                            }
+                        }
+
+                    },
+                    complete: function () {
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

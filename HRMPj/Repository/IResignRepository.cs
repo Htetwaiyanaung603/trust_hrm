@@ -17,5 +17,11 @@ namespace HRMPj.Repository
         List<Resign> GetDelete();
         Resign GetDeleteList(long id);
         bool GetExit(long id);
+        List<EmployeeInfo> GetEmployeeListByDesignationId(long designationId);
+        List<EmployeeInfo> GetEmpListById(long branchId, long departmentId, long designationId,long empId);
+        List<Resign> RetrieveResignList();
+        void UpdateStatus(long ResignId, string status);
+        
+
     }
 }

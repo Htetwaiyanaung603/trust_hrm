@@ -85,33 +85,34 @@ namespace HRMPj.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LeaveFromDate,LeaveToDate,Description,LeaveTotalDay,HalfDay,UnPaidLeaveStatus,LeaveRemainDay,LeaveTypeId,FromEmployeeInfoId,ToEmployeeInfoId")] LeaveRequestViewModel leaveRequest)
         {
+            if (ModelState.IsValid)
+            {
+                LeaveRequest ll = new LeaveRequest()
+                {
+                    CurrentYear = DateTime.Now.Year,
+                    LeaveFromDate = leaveRequest.LeaveFromDate,
+                    LeaveToDate = leaveRequest.LeaveToDate,
+                    LeaveTotalDay = leaveRequest.LeaveTotalDay,
+                    HalfDay = leaveRequest.HalfDay.ToString(),
+                    Description = leaveRequest.Description,
+                    Status = LeaveStatus.Pending.ToString(),
+                    UnPaidLeaveStatus = leaveRequest.UnPaidLeaveStatus.ToString(),
+                    LeaveRemainDay = leaveRequest.LeaveRemainDay,
+                    FromEmployeeInfoId = leaveRequest.FromEmployeeInfoId,
+                    ToEmployeeInfoId = leaveRequest.ToEmployeeInfoId
+                };
+                if (leaveRequest.UnPaidLeaveStatus)
+                {
+                    ll.LeaveType = null;
+                }
+                else
+                {
+                    ll.LeaveTypeId = leaveRequest.LeaveTypeId;
+                }
 
-            LeaveRequest ll = new LeaveRequest()
-            {
-                CurrentYear = DateTime.Now.Year,
-                LeaveFromDate = leaveRequest.LeaveFromDate,
-                LeaveToDate = leaveRequest.LeaveToDate,
-                LeaveTotalDay = leaveRequest.LeaveTotalDay,
-                HalfDay = leaveRequest.HalfDay.ToString(),
-                Description = leaveRequest.Description,
-                Status = LeaveStatus.Pending.ToString(),
-                UnPaidLeaveStatus = leaveRequest.UnPaidLeaveStatus.ToString(),
-                LeaveRemainDay = leaveRequest.LeaveRemainDay,
-                FromEmployeeInfoId = leaveRequest.FromEmployeeInfoId,
-                ToEmployeeInfoId = leaveRequest.ToEmployeeInfoId
-            };
-            if (leaveRequest.UnPaidLeaveStatus)
-            {
-                ll.LeaveType = null;
+                await leaveRequestRepository.Save(ll);
+                return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                ll.LeaveTypeId = leaveRequest.LeaveTypeId;
-            }
-
-            await leaveRequestRepository.Save(ll);
-            return RedirectToAction(nameof(Index));
-
             /*ViewBag.Message = ModelState.ErrorCount + ">>>>> ";*/
             ViewData["LeaveTypeId"] = new SelectList(leaveTypeRepository.GetLeaveTypeList(), "Id", "TypeName", leaveRequest.LeaveTypeId);
             ViewData["FromEmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "EmployeeName", leaveRequest.FromEmployeeInfoId);
@@ -174,7 +175,7 @@ namespace HRMPj.Controllers
         }
 
         // GET: LeaveRequests/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        public IActionResult Delete(long? id)
         {
             if (id == null)
             {

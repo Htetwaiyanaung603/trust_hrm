@@ -82,45 +82,80 @@ window.location.href = "@Url.Action("GetEmpView", "PayRolls")";
     <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
         <div class="main-card mb-3 card">
             <div class="card-body">
-                <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+                <form asp-action="CalculatePayRoll" method="post">
+                    <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
 
-                    <thead>
-                        <tr>
-                            <th>
-                                EmployeeName
-                            </th>
-                            <th>
-                                OT Field
-                            </th>
-                            <th>
-                                Allowance Field
-                            </th>
-                            <th>
-                                Bonus
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in @ViewBag.Employee)
-                        {
+                        <thead>
+                            <tr>
+                                <th>
+                                    No
+                                </th>
+                                <th>
+                                    EmployeeName
+                                </th>
+                                <th>
+                                    OT Field
+                                </th>
+                                <th>
+                                    Allowance Field
+                                </th>
+                                <th>
+                                    Bonus
+                                </th>
+                                <th>
+                                    Basic Salary
+                                </th>
+                                <th>
+                                    PenaltyFee
+                                </th>
+                                <th>
+                                    Net Pay
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int i = 0; }
+                            @{var e = 0;}
+                            @foreach (var item in @ViewBag.Employee)
+                            {
+                                e++;
                             <tr>
                                 <td>
-                                    @item.EmployeeInfoId
+                                    @e
                                 </td>
                                 <td>
-                                    @item.OTFee
+                                    <input type="hidden" name="o[@i].EmployeeInfoId" value="@item.EmployeeInfoId" />@item.EmployeeName
                                 </td>
                                 <td>
-                                    @item.TotalAllowence
+                                    <input type="text" name="o[@i].OTFee" value="@item.OTFee" />
                                 </td>
                                 <td>
-                                    @item.Bonus
+                                    <input type="text" name="o[@i].TotalAllowence" value="@item.TotalAllowence" />
                                 </td>
-                            
+                                <td>
+                                    <input type="text" name="o[@i].Bonus" value="@item.Bonus" />
+                                </td>
+                                <td>
+                                    <input type="text" name="o[@i].BasicSalary" value="@item.BasicSalary" />
+                                </td>
+                                <td>
+                                    <input type="text" name="o[@i].PenaltyFee" value="@item.PenaltyFee" />
+                                </td>
+                                <td>
+                                    <input type="text" name="o[@i].NetPay" value="@item.NetPay" />
+                                    <input type="hidden" name="o[@i].Month" value="@ViewBag.Month" />
+                                    <input type="hidden" name="o[@i].Year" value="@ViewBag.Year" />
+                                </td>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                    <div class="position-relative row form-group">
+                        <input type="submit" value="Save" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" />
+                        <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

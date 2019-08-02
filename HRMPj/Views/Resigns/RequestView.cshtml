@@ -1,0 +1,148 @@
+﻿@model IEnumerable<HRMPj.Models.Resign>
+
+@{
+    ViewData["Title"] = "RequestView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <a asp-action="Create" class="mb-2 mr-2 btn-icon btn-pill btn btn-primary">Create New</a>
+</p>
+<div class="main-card mb-3 card">
+    <div class="card-header">
+        <div class="media flex-wrap w-100 align-items-center">
+            <div class=" media-body ml-3">
+                <div class="text-muted large">
+                    @ViewData["Title"]
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResignDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResignStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comment)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Remark)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApprovedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Year)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ToEmployeeInfo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FromEmployeeInfo)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ResignDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ResignStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remark)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApprovedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ToEmployeeInfo.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FromEmployeeInfo.Id)
+                    </td>
+                    <td>
+                        @if (@item.Status == "Pending")
+                        {
+                            <button class="@item.Id mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary" onclick="ResignStatus(@item.Id,'Approve')"><i class="fa fa-check"></i></button>
+                            <button class="@item.Id mb-2 mr-2 btn-icon btn-pill btn btn-outline-danger" onclick="ResignStatus(@item.Id,'Reject')"><i class="fa fa-times"></i></button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts{
+
+    <script>
+        $(function () {
+            $('.metismenu li').removeClass("mm-active");
+            $('.metismenu li ul').removeClass("mm-show");
+            $('.metismenu li ul li a').removeClass("mm-active");
+            $('.metismenu #startup').addClass("mm-active");
+            $('.metismenu  #startup ul').addClass("mm-show");
+
+            $('.metismenu #resignview').addClass("mm-active");
+            $('#example').DataTable();
+        });
+
+        function ResignStatus(id, status, btn) {
+            $.ajax({
+
+                contentType: 'application/json; charset=utf-8',
+                type: "GET",
+                url: '/Resigns/ResignChangeStatus?ResignId=' + id + "&Status=" + status ,
+
+                success: function (data) {
+                    if (data) {
+
+                        $('.' + id).remove();
+                    }
+                    else {
+                        alet("error");
+                    }
+
+                    if (typeof (callback) == "function") {
+                        callback();
+                    }
+
+
+                },
+                complete: function () {
+
+                }
+
+            });
+        }
+    </script>
+
+}
+

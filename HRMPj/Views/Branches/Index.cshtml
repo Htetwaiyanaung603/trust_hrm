@@ -29,6 +29,9 @@
                     <thead>
                         <tr>
                             <th>
+                                No
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.BranchName)
                             </th>
                             <th>
@@ -44,27 +47,32 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{var i = 0;}
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BranchName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Address)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CreatedDate)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Company.CompanyName)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Delete</a>
-                                </td>
-                            </tr>
+                            i++;
+                        <tr>
+                            <td>
+                                @i
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BranchName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Company.CompanyName)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Delete</a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -78,6 +86,14 @@
 @section Scripts{
     <script>
         $(function () {
+           
+            $('.metismenu li').removeClass("mm-active");
+            $('.metismenu li ul').removeClass("mm-show");
+            $('.metismenu li ul li a').removeClass("mm-active");
+            $('.metismenu #startup').addClass("mm-active");
+            $('.metismenu  #startup ul').addClass("mm-show");
+            
+            $('.metismenu #branch').addClass("mm-active");
 
             $('#example').DataTable();
         });

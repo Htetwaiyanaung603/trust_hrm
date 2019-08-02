@@ -8,15 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using HRMPj.Data;
 using HRMPj.Models;
 using HRMPj.Repository;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace HRMPj.Controllers
 {
     public class AllowanceTypesController : Controller
     {
         private readonly IAllowanceType allowanceType;
-        public AllowanceTypesController(IAllowanceType i)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public AllowanceTypesController(IAllowanceType i,IHttpContextAccessor e)
         {
             this.allowanceType = i;
+            this.httpContextAccessor = e;
         }
         //private readonly ApplicationDbContext _context;
 
@@ -65,13 +69,14 @@ namespace HRMPj.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 AllowanceType alt = new AllowanceType()
                 {
                     Name = allowanceTypes.Name,
                     AmmountPerDay = allowanceTypes.AmmountPerDay,
                     Status = allowanceTypes.Status,
 
-                    CreatedBy = allowanceTypes.CreatedBy,
+                    CreatedBy = userId,
                     CreatedDate = DateTime.Now
                 };
                 await allowanceType.Save(alt);

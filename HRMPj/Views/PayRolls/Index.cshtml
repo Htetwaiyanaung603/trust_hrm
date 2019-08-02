@@ -7,7 +7,7 @@
 
 
 <p>
-    <a asp-action="Create" class="mb-2 mr-2 btn-icon btn-pill btn btn-primary">Create New</a>
+    <a asp-action="GetEmpView" class="mb-2 mr-2 btn-icon btn-pill btn btn-primary">Create New</a>
 </p>
 <div class="main-card mb-3 card">
     <div class="card-header">
@@ -28,6 +28,12 @@
                         <thead>
                             <tr>
                                 <th>
+                                    No
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.EmployeeInfo)
+                                </th>
+                                <th>
                                     @Html.DisplayNameFor(model => model.PaymentDate)
                                 </th>
                                 <th>
@@ -42,84 +48,53 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.Bonus)
                                 </th>
-                               
                                 <th>
                                     @Html.DisplayNameFor(model => model.PenaltyFee)
                                 </th>
-                               
+
                                 <th>
                                     @Html.DisplayNameFor(model => model.NetPay)
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.CreatedDate)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.CreatedBy)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Year)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Month)
-                                </th>
-                               
 
-                                <th>
-                                    @Html.DisplayNameFor(model => model.EmployeeInfo)
-                                </th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
+                            @{var i = 0;}
                             @foreach (var item in Model)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PaymentDate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.BasicSalary)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.OTFee)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TotalAllowence)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Bonus)
-                                    </td>
-                                  
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PenaltyFee)
-                                    </td>
-                                   
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NetPay)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CreatedDate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CreatedBy)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Year)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Month)
-                                    </td>
-                                   
+                                i++;
+                            <tr>
+                                <td>
+                                    @i
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmployeeInfo.EmployeeName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PaymentDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BasicSalary)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OTFee)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalAllowence)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Bonus)
+                                </td>
 
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EmployeeInfo.EmployeeName)
-                                    </td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Details</a> |
-                                        <a asp-action="Delete" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Delete</a>
-                                    </td>
-                                </tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PenaltyFee)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NetPay)
+                                </td>
+
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -132,7 +107,13 @@
 @section Scripts{
     <script>
         $(function () {
+            $('.metismenu li').removeClass("mm-active");
+            $('.metismenu li ul').removeClass("mm-show");
+            $('.metismenu li ul li a').removeClass("mm-active");
+            $('.metismenu #startup').addClass("mm-active");
+            $('.metismenu  #startup ul').addClass("mm-show");
 
+            $('.metismenu #payroll').addClass("mm-active");
             $('#example').DataTable();
         });
     </script>

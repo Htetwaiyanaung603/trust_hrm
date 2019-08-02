@@ -30,6 +30,9 @@
                     <thead>
                         <tr>
                             <th>
+                                No
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.CompanyName)
                             </th>
                             <th>
@@ -39,9 +42,14 @@
                         </tr>
                     </thead>
                     <tbody id="tableId">
+                        @{var i = 0;}
                         @foreach (var item in Model)
                         {
-                            <tr class="Search">
+                            i++;
+                            <tr>
+                                <td>
+                                    @i
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.CompanyName)
                                 </td>
@@ -65,37 +73,46 @@
     </div>
 </div>
 
-@*<script src="~/lib/jquery/jquery-1.8.1.min.js"></script>
-    <script>
-        $(document).ready(function () {
-
-            function Contains(text_one, text_two) {
-                if (text_one.indexOf(text_two) != -1)
-                    return true;
-            }
-            $("#Search").keyup(function () {
-
-                var searchText = $("#Search").val().toLowerCase();
-                $(".Search").each(function () {
-
-                    if (!Contains($(this).text().toLowerCase(), searchText)) {
-
-                            $(this).hide();
-                        }
-                    else {
-
-                            $(this).show();
-                        }
-                    });
-                });
-
-        });
-    </script>*@
 @section Scripts{
     <script>
         $(function () {
 
+            $('.metismenu li').removeClass("mm-active");
+            $('.metismenu li ul').removeClass("mm-show");
+            $('.metismenu li ul li a').removeClass("mm-active");
+            $('.metismenu #startup').addClass("mm-active");
+            $('.metismenu  #startup ul').addClass("mm-show");
+
+            $('.metismenu #company').addClass("mm-active");
+
             $('#example').DataTable();
         });
-    </script>
-}
+</script>
+    }
+    @*<script src="~/lib/jquery/jquery-1.8.1.min.js"></script>
+        <script>
+            $(document).ready(function () {
+
+                function Contains(text_one, text_two) {
+                    if (text_one.indexOf(text_two) != -1)
+                        return true;
+                }
+                $("#Search").keyup(function () {
+
+                    var searchText = $("#Search").val().toLowerCase();
+                    $(".Search").each(function () {
+
+                        if (!Contains($(this).text().toLowerCase(), searchText)) {
+
+                                $(this).hide();
+                            }
+                        else {
+
+                                $(this).show();
+                            }
+                        });
+                    });
+
+            });
+        </script>*@
+

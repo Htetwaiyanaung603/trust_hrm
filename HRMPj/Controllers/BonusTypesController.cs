@@ -8,15 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using HRMPj.Data;
 using HRMPj.Models;
 using HRMPj.Repository;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace HRMPj.Controllers
 {
     public class BonusTypesController : Controller
     {
         private readonly IBonusTypeRepository bonusTypeRepository;
-        public BonusTypesController(IBonusTypeRepository d)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public BonusTypesController(IBonusTypeRepository d, IHttpContextAccessor f)
         {
             this.bonusTypeRepository = d;
+            this.httpContextAccessor = f;
         }
         //private readonly ApplicationDbContext _context;
 
@@ -65,13 +69,14 @@ namespace HRMPj.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 BonusType bb = new BonusType()
                 {
                     TypeName = bonusType.TypeName,
                     Amount = bonusType.Amount,
                     IsActive = bonusType.IsActive,
                     Year = bonusType.Year,
-                    CreatedBy = "",
+                    CreatedBy = userId,
                     CreatedDate = DateTime.Now
                 };
                 await bonusTypeRepository.Save(bb);

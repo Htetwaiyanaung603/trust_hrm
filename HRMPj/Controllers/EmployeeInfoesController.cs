@@ -11,6 +11,7 @@ using HRMPj.Repository;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace HRMPj.Controllers
 {
@@ -20,12 +21,14 @@ namespace HRMPj.Controllers
         private readonly IDepartmentRepository departmentRepository;
         private readonly IDesignationRepository designationRepository;
         private readonly IEmployeeInfoRepository employeeInfoRepository;
-        public EmployeeInfoesController(IBranchRepository b,IDesignationRepository ds,IDepartmentRepository dp,IEmployeeInfoRepository e)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public EmployeeInfoesController(IBranchRepository b,IDesignationRepository ds,IDepartmentRepository dp,IEmployeeInfoRepository e, IHttpContextAccessor f)
         {
             this.branchRepository = b;
             this.departmentRepository = dp;
             this.designationRepository = ds;
             this.employeeInfoRepository = e;
+            this.httpContextAccessor = f;
         }
         //private readonly ApplicationDbContext _context;
 
@@ -38,8 +41,10 @@ namespace HRMPj.Controllers
         public IActionResult Index()
         {
            // var applicationDbContext = _conext.EcontmployeeInfos.Include(e => e.Branch).Include(e => e.Department).Include(e => e.Designation);
+
             return View(employeeInfoRepository.GetDetail());
         }
+       
         [HttpGet]
         public IActionResult GetDepartmentList(long BranchId)
         {
@@ -101,6 +106,7 @@ namespace HRMPj.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 List<Document> teaList = new List<Document>();
 
                 if (employee.DocumentProfile != null)
@@ -108,25 +114,19 @@ namespace HRMPj.Controllers
 
                     foreach (IFormFile photo in employee.DocumentProfile)
                     {
-                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", photo.FileName);
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Document", photo.FileName);
                         var stream = new FileStream(path, FileMode.Create);
                         photo.CopyTo(stream);
                         Document teas = new Document()
                         {
-                            DocumentImagePath = photo.FileName
+                            DocumentImagePath = "../images/Document/" + photo.FileName
                         };
                         teaList.Add(teas);
                     }
                 };
 
 
-                if (employee.EmployeeProfile != null)
-                {
-                    foreach (IFormFile photos in employee.EmployeeProfile)
-                    {
-                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", photos.FileName);
-                        var stream = new FileStream(path, FileMode.Create);
-                        photos.CopyTo(stream);
+                       
                         EmployeeInfo str = new EmployeeInfo()
                         {
                             EmployeeName = employee.EmployeeName,
@@ -143,21 +143,28 @@ namespace HRMPj.Controllers
                             ATMNumber = employee.ATMNumber,
                             IsActive = employee.IsActive,
                             CreatedDate = DateTime.Now,
-                            CreatedBy = "",
-                            EmployeeProfile = photos.FileName,
+                            CreatedBy = userId,
                             Document = teaList,
                             DepartmentId=employee.DepartmentId,
                             DesignationId=employee.DesignationId,
                             BranchId=employee.BranchId,
                             BasicSalary=employee.BasicSalary
                         };
-                        await employeeInfoRepository.Save(str);
+                if (employee.EmployeeProfile != null)
+                {
 
-                    }
-                    return RedirectToAction(nameof(Index));
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", employee.EmployeeProfile.FileName);
+                    var stream = new FileStream(path, FileMode.Create);
+                    employee.EmployeeProfile.CopyTo(stream);
+
+                    str.EmployeeProfile = "../images/" + employee.EmployeeProfile.FileName;
                 }
+                await employeeInfoRepository.Save(str);
+                return RedirectToAction(nameof(Index));
 
             }
+                   
+               
         
             ViewData["BranchId"] = new SelectList(branchRepository.GetBranchList(), "Id", "Id", employee.BranchId);
             ViewData["DepartmentId"] = new SelectList(departmentRepository.GetDepartmentList(), "Id", "Id", employee.DepartmentId);

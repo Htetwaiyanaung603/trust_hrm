@@ -8,15 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using HRMPj.Data;
 using HRMPj.Models;
 using HRMPj.Repository;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace HRMPj.Controllers
 {
     public class LeaveTypesController : Controller
     {
         private readonly ILeaveTypeRepository leaveTypeRepository;
-        public LeaveTypesController(ILeaveTypeRepository d)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public LeaveTypesController(ILeaveTypeRepository d, IHttpContextAccessor f)
         {
             this.leaveTypeRepository = d;
+            this.httpContextAccessor = f;
         }
         //private readonly ApplicationDbContext _context;
 
@@ -65,11 +69,12 @@ namespace HRMPj.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 LeaveType ll = new LeaveType()
                 {
                     TypeName = leaveType.TypeName,
-                   
-                    
+
+                    CreatedBy = userId,
                     CreatedDate = DateTime.Now,
                     ServiceDay = leaveType.ServiceDay
                 };

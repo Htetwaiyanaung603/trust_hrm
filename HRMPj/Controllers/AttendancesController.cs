@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using HRMPj.Data;
 using HRMPj.Models;
 using HRMPj.Repository;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace HRMPj.Controllers
 {
@@ -17,12 +19,14 @@ namespace HRMPj.Controllers
         private readonly IAttendance attendanceRepository;
         private readonly IBranchRepository branchRepository;
         private readonly IDepartmentRepository departmentRepository;
-        public AttendancesController( IEmployeeInfoRepository e,IAttendance a,IBranchRepository b,IDepartmentRepository d)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public AttendancesController( IEmployeeInfoRepository e,IAttendance a,IBranchRepository b,IDepartmentRepository d, IHttpContextAccessor k)
         {
             this.attendanceRepository = a;
             this.employeeInfoRepository = e;
             this.branchRepository = b;
             this.departmentRepository = d;
+            this.httpContextAccessor = k;
         }
         //private readonly ApplicationDbContext _context;
 
@@ -52,7 +56,7 @@ namespace HRMPj.Controllers
         public IActionResult GetAttendance()
         {
             ViewData["BranchId"] = new SelectList(branchRepository.GetBranchList(), "Id", "BranchName");
-            List<Attendance> searchEmployee = attendanceRepository.GetDetail();
+           // List<Attendance> searchEmployee = attendanceRepository.GetDetail();
             ViewBag.Employee = new List<AttendancdRecordViewModel>();
             ViewBag.DayList = new List<int>();
             
@@ -159,7 +163,7 @@ namespace HRMPj.Controllers
             if (ModelState.IsValid)
             {
 
-
+                var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 foreach (var item in emp)
                 {
                     Attendance atten = new Attendance()
@@ -170,7 +174,7 @@ namespace HRMPj.Controllers
                         CreatedDate = DateTime.Now,
                         BranchId=item.BranchId,
                         DepartmentId=item.DepartmentId,
-                        CreatedBy=""
+                        CreatedBy= userId
                     };
                     await attendanceRepository.Save(atten);
                 };

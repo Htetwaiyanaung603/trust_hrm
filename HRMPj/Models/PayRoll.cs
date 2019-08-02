@@ -12,6 +12,7 @@ namespace HRMPj.Models
     {
         [Key]
         public long Id { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}")]
         public DateTime PaymentDate { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
         public decimal BasicSalary { get; set; }
@@ -26,6 +27,7 @@ namespace HRMPj.Models
       
         [Column(TypeName = "decimal(18, 2)")]
         public decimal NetPay { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}")]
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public string Year { get; set; }

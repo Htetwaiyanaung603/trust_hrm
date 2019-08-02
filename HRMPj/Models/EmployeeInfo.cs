@@ -53,6 +53,8 @@ namespace HRMPj.Models
        
         public ICollection<LeaveRequest> FromLeaveRequest { get; set; }
         public ICollection<LeaveRequest> ToLeaveRequest { get; set; }
+        public ICollection<Resign> FromResign { get; set; }
+        public ICollection<Resign> ToResign { get; set; }
     }
     
 }

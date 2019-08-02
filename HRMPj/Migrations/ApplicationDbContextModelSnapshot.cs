@@ -353,6 +353,8 @@ namespace HRMPj.Migrations
 
                     b.Property<string>("Nationality");
 
+                    b.Property<long?>("ResignId");
+
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
@@ -363,7 +365,28 @@ namespace HRMPj.Migrations
 
                     b.HasIndex("DesignationId");
 
+                    b.HasIndex("ResignId");
+
                     b.ToTable("EmployeeInfo");
+                });
+
+            modelBuilder.Entity("HRMPj.Models.EmpResignViewModel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("BranchId");
+
+                    b.Property<long>("DepartmentId");
+
+                    b.Property<long>("DesignationId");
+
+                    b.Property<long>("EmployeeId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmpResignViewModel");
                 });
 
             modelBuilder.Entity("HRMPj.Models.LeaveRequest", b =>
@@ -533,7 +556,7 @@ namespace HRMPj.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<long>("EmployeeInfoId");
+                    b.Property<long>("FromEmployeeInfoId");
 
                     b.Property<string>("Remark");
 
@@ -543,12 +566,15 @@ namespace HRMPj.Migrations
 
                     b.Property<string>("Status");
 
+                    b.Property<long>("ToEmployeeInfoId");
+
                     b.Property<string>("Year");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeInfoId")
-                        .IsUnique();
+                    b.HasIndex("FromEmployeeInfoId");
+
+                    b.HasIndex("ToEmployeeInfoId");
 
                     b.ToTable("Resign");
                 });
@@ -766,6 +792,10 @@ namespace HRMPj.Migrations
                         .WithMany("EmployeeInfo")
                         .HasForeignKey("DesignationId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("HRMPj.Models.Resign", "Resign")
+                        .WithMany()
+                        .HasForeignKey("ResignId");
                 });
 
             modelBuilder.Entity("HRMPj.Models.LeaveRequest", b =>
@@ -809,9 +839,14 @@ namespace HRMPj.Migrations
 
             modelBuilder.Entity("HRMPj.Models.Resign", b =>
                 {
-                    b.HasOne("HRMPj.Models.EmployeeInfo", "EmployeeInfo")
-                        .WithOne("Resign")
-                        .HasForeignKey("HRMPj.Models.Resign", "EmployeeInfoId")
+                    b.HasOne("HRMPj.Models.EmployeeInfo", "FromEmployeeInfo")
+                        .WithMany("FromResign")
+                        .HasForeignKey("FromEmployeeInfoId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("HRMPj.Models.EmployeeInfo", "ToEmployeeInfo")
+                        .WithMany("ToResign")
+                        .HasForeignKey("ToEmployeeInfoId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

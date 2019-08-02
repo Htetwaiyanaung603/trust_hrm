@@ -213,8 +213,8 @@
 
                 if (!$("#UnPaidLeaveStatus").is(":checked")) {
                     if ($('#LeaveRemainDay').val() < diff || $('#LeaveRemainDay').val() == 0) {
-                        alert()
-                        // swal("Rejected", "Your Leave Remain day is limited!", "error");
+                       
+                        swal("Rejected", "Your Leave Remain day is limited!", "error");
                         diff = 0;
                     }
                 }

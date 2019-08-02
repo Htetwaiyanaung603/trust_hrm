@@ -33,38 +33,66 @@
         <div class="app-sidebar__inner">
             <ul class="vertical-nav-menu metismenu">
                 <li class="app-sidebar__heading">Menu</li>
-                <li class="mm-active">
+                <li id="startup">
                     <a href="#" aria-expanded="true">
                         <i class="metismenu-icon pe-7s-rocket"></i>
                         Start Up
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
-                    <ul class="mm-collapse mm-show">
+                    <ul class="mm-collapse ">
                         <li>
-                            <a class="mm-active" href="/Companies/Create">
+                            <a href="/Companies/Index" id="company">
 
                                 <i class="metismenu-icon">
                                 </i>Company
                             </a>
                         </li>
                         <li>
-                            <a href="/Branches/Create">
+                            <a href="/Branches/Index" id="branch">
                                 <i class="metismenu-icon">
                                 </i>Branch
                             </a>
                         </li>
                         <li>
-                            <a href="/Departments/Create">
+                            <a href="/Departments/Index" id="department">
 
                                 <i class="metismenu-icon">
                                 </i>Department
                             </a>
                         </li>
                         <li>
-                            <a href="/Designations/Create">
+                            <a href="/Designations/Index" id="designation">
 
                                 <i class="metismenu-icon">
                                 </i>Designation
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/UserInfoes/Index" id="register">
+
+                                <i class="metismenu-icon">
+                                </i>Register View
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/OverTimeSettings/Index" id="overtimesetting">
+
+                                <i class="metismenu-icon">
+                                </i>OverTimeSetting
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/LeaveTypes/Index" id="leavetype">
+
+                                <i class="metismenu-icon">
+                                </i>LeaveType
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/BonusTypes/Index" id="bonustype">
+
+                                <i class="metismenu-icon">
+                                </i>BonusType
                             </a>
                         </li>
                     </ul>
@@ -77,14 +105,14 @@
                     </a>
                     <ul class="mm-collapse" style="">
                         <li>
-                            <a href="/EmployeeInfoes/Create">
+                            <a href="/EmployeeInfoes/Index" id="employee">
 
                                 <i class="metismenu-icon">
                                 </i>Employee
                             </a>
                         </li>
                         <li>
-                            <a href="/Attendances/GetAttendance">
+                            <a href="/Attendances/GetAttendance" id="attendance">
 
                                 <i class="metismenu-icon">
                                 </i>Attendance 
@@ -100,17 +128,10 @@
                     </a>
                     <ul class="mm-collapse" style="">
                         <li>
-                            <a href="/OverTimes/Create">
+                            <a href="/OverTimes/Index" id="overtime">
 
                                 <i class="metismenu-icon">
                                 </i>OverTime
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/OverTimeSettings/Create">
-
-                                <i class="metismenu-icon">
-                                </i>OverTimeSetting
                             </a>
                         </li>
                     </ul>
@@ -123,19 +144,13 @@
                     </a>
                     <ul class="mm-collapse" style="">
                         <li>
-                            <a href="/Bonuses/Create">
+                            <a href="/Bonuses/Index" id="bonus">
 
                                 <i class="metismenu-icon">
                                 </i>Bonus
                             </a>
                         </li>
-                        <li>
-                            <a href="/BonusTypes/Create">
-
-                                <i class="metismenu-icon">
-                                </i>BonusType
-                            </a>
-                        </li>
+                      
                    </ul>
                </li>
                 <li class="">
@@ -146,14 +161,14 @@
                     </a>
                     <ul class="mm-collapse" style="">
                         <li>
-                            <a href="/AllowanceDetails/Create">
+                            <a href="/AllowanceDetails/Index" id="allowancedetail">
 
                                 <i class="metismenu-icon">
                                 </i>AllowanceDetail
                             </a>
                         </li>
                         <li>
-                            <a href="/AllowanceTypes/Create">
+                            <a href="/AllowanceTypes/Index" id="allowancetype">
 
                                 <i class="metismenu-icon">
                                 </i>AllowanceType
@@ -168,22 +183,16 @@
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul class="mm-collapse" style="">
-                        <li>
-                            <a href="/LeaveTypes/Create">
 
-                                <i class="metismenu-icon">
-                                </i>LeaveType
-                            </a>
-                        </li>
                         <li>
-                            <a href="/LeaveRequests/Create">
+                            <a href="/LeaveRequests/Index" id="leaverequest">
 
                                 <i class="metismenu-icon">
                                 </i>LeaveRequest
                             </a>
                         </li>
                         <li>
-                            <a href="/LeaveRequests/LeaveRequestView">
+                            <a href="/LeaveRequests/LeaveRequestView" id="leaverequestview">
 
                                 <i class="metismenu-icon">
                                 </i>LeaveRequestView
@@ -201,12 +210,20 @@
                     <ul class="mm-collapse" style="">
                         <li>
                         <li>
-                            <a href="/Resigns/Create">
+                            <a href="/Resigns/Index" id="resign">
 
                                 <i class="metismenu-icon">
                                 </i>Resign
                             </a>
                         </li>
+                        <li>
+                            <a href="/Resigns/RequestView" id="resignview">
+
+                                <i class="metismenu-icon">
+                                </i>Resign View
+                            </a>
+                        </li>
+
                     </ul>
                 </li>
                 <li class="">
@@ -218,7 +235,7 @@
                     <ul class="mm-collapse" style="">
                         <li>
                         <li>
-                            <a href="/PayRolls/GetEmpView">
+                            <a href="/PayRolls/Index" id="payroll">
 
                                 <i class="metismenu-icon">
                                 </i>PayRoll

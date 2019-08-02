@@ -26,6 +26,9 @@
                     <thead>
                         <tr>
                             <th>
+                                No
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.Month)
                             </th>
                             <th>
@@ -41,9 +44,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{var i = 0;}
                         @foreach (var item in Model)
                         {
+                            i++;
                             <tr>
+                                <td>
+                                    @i
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Month)
                                 </td>
@@ -75,7 +83,13 @@
 @section Scripts{
     <script>
         $(function () {
-           
+            $('.metismenu li').removeClass("mm-active");
+            $('.metismenu li ul').removeClass("mm-show");
+            $('.metismenu li ul li a').removeClass("mm-active");
+            $('.metismenu #startup').addClass("mm-active");
+            $('.metismenu  #startup ul').addClass("mm-show");
+
+            $('.metismenu #allowancedetail').addClass("mm-active");
             $('#example').DataTable();
         });
     </script>

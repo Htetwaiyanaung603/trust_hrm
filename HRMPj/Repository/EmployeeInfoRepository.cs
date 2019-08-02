@@ -75,7 +75,7 @@ namespace HRMPj.Repository
 
         public List<EmployeeInfo> GetEmployeeListByBranchAndDepartmentIdAndDesignationId(long branchId, long departmentId, long designationId)
         {
-            List<EmployeeInfo> blist = context.EmployeeInfos.Include(d => d.Designation).Where(b => b.BranchId == branchId && b.DepartmentId == departmentId && b.DesignationId == designationId).ToList();
+            List<EmployeeInfo> blist = context.EmployeeInfos.Include(d => d.Designation).Where(b => b.BranchId == branchId && b.DepartmentId == departmentId && b.DesignationId == designationId && b.IsActive == true).ToList();
             return blist;
         }
 
@@ -95,6 +95,15 @@ namespace HRMPj.Repository
         {
             context.Update(ot);
             await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateEmp(long empId)
+        {
+            EmployeeInfo emp = context.EmployeeInfos.Include(i => i.Resign).Where(e => e.Id == empId && e.Resign.Status == "Approve").Single();
+            emp.IsActive = false;
+            context.UpdateRange(emp);
+            await context.SaveChangesAsync();
+
         }
     }
 }

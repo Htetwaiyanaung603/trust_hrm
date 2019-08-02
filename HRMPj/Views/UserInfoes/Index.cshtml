@@ -1,0 +1,102 @@
+﻿@model IEnumerable<HRMPj.Models.UserInfo>
+
+    @{
+        ViewData["Title"] = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    <p>
+        <a asp-action="Create" class="mb-2 mr-2 btn-icon btn-pill btn btn-primary">Create New</a>
+    </p>
+    <div class="main-card mb-3 card">
+        <div class="card-header">
+            <div class="media flex-wrap w-100 align-items-center">
+                <div class=" media-body ml-3">
+                    <div class="text-muted large">
+                        @ViewData["Title"]
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                @*<div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="example_length"><label>Show <select name="example_length" aria-controls="example" class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="example_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example"></label></div></div></div><div class="row">*@
+                <div class="col-sm-12">
+                    <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+                        @*<thead>
+                                <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 164.2px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Name</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 255.2px;" aria-label="Position: activate to sort column ascending">Position</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 118.2px;" aria-label="Office: activate to sort column ascending">Office</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 56.2px;" aria-label="Age: activate to sort column ascending">Age</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 119.2px;" aria-label="Start date: activate to sort column ascending">Start date</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 94.2px;" aria-label="Salary: activate to sort column ascending">Salary</th></tr>
+                            </thead>*@
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    No
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UserName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Email)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.EmployeeName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DepartmentName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DesignationName)
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{var i = 0;}
+                            @foreach (var item in Model)
+                            {
+                                i++;
+                            <tr>
+                                <td>
+                                    @i
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmployeeName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DepartmentName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DesignationName)
+                                </td>
+
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+   
+
+    @section Scripts{
+        <script>
+        $(function () {
+            $('.metismenu li').removeClass("mm-active");
+            $('.metismenu li ul').removeClass("mm-show");
+            $('.metismenu li ul li a').removeClass("mm-active");
+            $('.metismenu #startup').addClass("mm-active");
+            $('.metismenu  #startup ul').addClass("mm-show");
+
+            $('.metismenu #register').addClass("mm-active");
+            $('#example').DataTable();
+        });
+        </script>
+    }
+

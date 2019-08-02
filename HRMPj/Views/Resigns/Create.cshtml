@@ -21,13 +21,7 @@
         <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>@ViewBag.Message</div>
-            <div class="position-relative row form-group">
-                <label asp-for="ResignDate" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-5">
-                    <input asp-for="ResignDate" class="form-control" />
-                    <span asp-validation-for="ResignDate" class="text-danger"></span>
-                </div>
-            </div>
+
             <div class="position-relative row form-group">
                 <label asp-for="ResignStatus" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-5">
@@ -50,27 +44,6 @@
                 </div>
             </div>
             <div class="position-relative row form-group">
-                <label asp-for="CreatedDate" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-5">
-                    <input asp-for="CreatedDate" class="form-control" />
-                    <span asp-validation-for="CreatedDate" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="position-relative row form-group">
-                <label asp-for="ApprovedDate" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-5">
-                    <input asp-for="ApprovedDate" class="form-control" />
-                    <span asp-validation-for="ApprovedDate" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="position-relative row form-group">
-                <label asp-for="Status" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-5">
-                    <input asp-for="Status" class="form-control" />
-                    <span asp-validation-for="Status" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="position-relative row form-group">
                 <label asp-for="Year" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-5">
                     <input asp-for="Year" class="form-control" />
@@ -78,9 +51,15 @@
                 </div>
             </div>
             <div class="position-relative row form-group">
-                <label asp-for="EmployeeInfoId" class="col-sm-2 col-form-label"></label>
+                <label asp-for="FromEmployeeInfoId" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-5">
-                    <select asp-for="EmployeeInfoId" class="form-control" asp-items="ViewBag.EmployeeInfoId"></select>
+                    <select asp-for="FromEmployeeInfoId" class="form-control" asp-items="ViewBag.FromEmployeeInfoId"></select>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label asp-for="ToEmployeeInfoId" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-5">
+                    <select asp-for="ToEmployeeInfoId" class="form-control" asp-items="ViewBag.ToEmployeeInfoId"></select>
                 </div>
             </div>
             <div class="position-relative row form-group">

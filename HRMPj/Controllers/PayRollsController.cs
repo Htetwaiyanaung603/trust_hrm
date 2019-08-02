@@ -9,6 +9,8 @@ using HRMPj.Data;
 using HRMPj.Models;
 using HRMPj.Repository;
 using Newtonsoft.Json;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace HRMPj.Controllers
 {
@@ -19,14 +21,15 @@ namespace HRMPj.Controllers
         private readonly IBranchRepository branchRepository;
         private readonly IDepartmentRepository departmentRepository;
         private readonly IDesignationRepository designationRepository;
-        public PayRollsController(IEmployeeInfoRepository e, IPayRollRepository a,IBranchRepository b,IDepartmentRepository d,IDesignationRepository de)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public PayRollsController(IEmployeeInfoRepository e, IPayRollRepository a,IBranchRepository b,IDepartmentRepository d,IDesignationRepository de, IHttpContextAccessor f)
         {
             this.payRollRepository = a;
             this.employeeInfoRepository = e;
             this.branchRepository = b;
             this.departmentRepository = d;
             this.designationRepository = de;
-
+            this.httpContextAccessor = f;
         }
         //private readonly ApplicationDbContext _context;
 
@@ -56,8 +59,40 @@ namespace HRMPj.Controllers
             List<EmployeeInfo> searchEmployee = employeeInfoRepository.GetEmployeeListByBranchAndDepartmentIdAndDesignationId(search.BranchId, search.DepartmentId,search.DesignationId);
             List<PayRollViewModel> o = payRollRepository.ClaculatePayRoll(search.Year, search.Month,searchEmployee);
             ViewBag.Employee = o;
-            
+            ViewBag.Month = search.Month;
+            ViewBag.Year = search.Year;
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CalculatePayRoll(List<PayRollViewModel> o)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                foreach (var ii in o)
+                {
+                    PayRoll p = new PayRoll
+                    {
+                        OTFee = ii.OTFee,
+                        TotalAllowence = ii.TotalAllowence,
+                        Bonus = ii.Bonus,
+                        PenaltyFee = ii.PenaltyFee,
+                        NetPay = ii.NetPay,
+                        BasicSalary = ii.BasicSalary,
+                        Month = ii.Month,
+                        Year = ii.Year,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = userId,
+                        PaymentDate = DateTime.Now,
+                        EmployeeInfoId=ii.EmployeeInfoId
+                    };
+                    await payRollRepository.Save(p);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+
         }
 
         [HttpGet]

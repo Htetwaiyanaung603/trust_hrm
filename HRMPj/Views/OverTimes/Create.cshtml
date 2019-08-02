@@ -24,7 +24,11 @@
             <div class="position-relative row form-group">
                 <label asp-for="OTDate" class="col-sm-2 col-form-label">OT Date</label>
                 <div class="col-sm-5">
-                    <input asp-for="OTDate" id="datepicker" placeholder="Enter date" type="date" class="form-control" />
+                    <div class="input-group date" id="datepicker">
+                        <input asp-for="OTDate" placeholder="Enter date" class="form-control" />
+                        <span class="input-group-addon"><span class="metismenu-icon pe-7s-timer"></span></span>
+
+                    </div>
                     <span asp-validation-for="OTDate" class="text-danger"></span>
                 </div>
             </div>
@@ -82,9 +86,9 @@
         </form>
     </div>
 </div>
-  
 
-      
+
+
 
 @section Scripts {
     <script>
@@ -131,6 +135,16 @@
                 else {
                     $('#OTTime').val("");
                 }
+            });
+         
+        });
+
+        $(function () {
+            
+            $("#datepicker").datetimepicker({
+                //format: "DD/MM/YYYY"
+                format : "YYYY",viewMode : "years"
+
             });
         });
     </script>

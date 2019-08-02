@@ -52,7 +52,9 @@ namespace HRMPj
             services.AddScoped<IBonusRepository, BonusRepository>();
             services.AddScoped<IResignRepository, ResignRepository>();
             services.AddScoped<IPayRollRepository, PayRollRepository>();
-           
+            services.AddScoped<IHomeRepository, HomeRepository>();
+            services.AddScoped<IUserInfoRepository, UserInfoRepository>();
+
 
 
 
@@ -91,7 +93,7 @@ namespace HRMPj
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Companies}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

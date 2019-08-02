@@ -17,7 +17,7 @@ namespace HRMPj.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-           
+            modelBuilder.Query<UserInfo>();
 
             // modelBuilder.Entity<EmployeeInfo>()
             //.HasOne(i => i.Branch)
@@ -61,16 +61,25 @@ namespace HRMPj.Data
            .WithMany(t => t.ToLeaveRequest)
            .HasForeignKey(m => m.ToEmployeeInfoId)
            .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Resign>()
-           .HasOne(i => i.EmployeeInfo)
-           .WithOne(c => c.Resign)
-           .OnDelete(DeleteBehavior.Restrict);
+          
 
             modelBuilder.Entity<LeaveRequest>()
            .HasOne(m => m.LeaveType)
            .WithMany(t => t.LeaveRequests)
            .HasForeignKey(m => m.LeaveTypeId)
            .IsRequired(false)
+           .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Resign>()
+           .HasOne(i => i.FromEmployeeInfo)
+           .WithMany(t => t.FromResign)
+           .HasForeignKey(m => m.FromEmployeeInfoId)
+           .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Resign>()
+           .HasOne(m => m.ToEmployeeInfo)
+           .WithMany(t => t.ToResign)
+           .HasForeignKey(m => m.ToEmployeeInfoId)
            .OnDelete(DeleteBehavior.Restrict);
 
         }
@@ -95,6 +104,7 @@ namespace HRMPj.Data
       
         public DbSet<HRMPj.Models.SearchViewModel> SearchViewModel { get; set; }
         public DbSet<HRMPj.Models.AttendanceSearchViewModel> AttendanceSearchViewModel { get; set; }
+        public DbSet<HRMPj.Models.EmpResignViewModel> EmpResignViewModel { get; set; }
      
     }
 }

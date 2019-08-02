@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using HRMPj.Data;
 using HRMPj.Models;
 using HRMPj.Repository;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace HRMPj.Controllers
 {
@@ -15,10 +17,12 @@ namespace HRMPj.Controllers
     {
         private readonly IDesignationRepository designationRepository;
         private readonly IDepartmentRepository departmentRepository;
-        public DesignationsController(IDesignationRepository de,IDepartmentRepository dp)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public DesignationsController(IDesignationRepository de,IDepartmentRepository dp,IHttpContextAccessor f)
         {
             this.designationRepository = de;
             this.departmentRepository = dp;
+            this.httpContextAccessor = f;
         }
         //private readonly ApplicationDbContext _context;
 
@@ -70,12 +74,13 @@ namespace HRMPj.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 Designation des = new Designation()
                 {
                     Name = designation.Name,
                     Remark = designation.Remark,
                     CreatedDate = designation.CreatedDate,
-                    CreatedBy = designation.CreatedBy,
+                    CreatedBy = userId,
                     DepartmentId = designation.DepartmentId
                 };
                // _context.Add(designation);

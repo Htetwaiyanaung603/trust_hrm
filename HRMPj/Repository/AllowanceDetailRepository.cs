@@ -22,6 +22,14 @@ namespace HRMPj.Repository
             await context.SaveChangesAsync();
         }
 
+
+
+        public AllowanceDetail ffff(string month, string year, long empId, long allTypeId)
+        {
+            AllowanceDetail dd = context.AllowanceDetails.Where(i => i.Month == month && i.Year == year && i.EmployeeInfoId == empId && i.AllowanceTypeId == allTypeId).Single();
+            return dd;
+        }
+
         public AllowanceDetail GetAllowanceDetail(long? Id)
         {
             try

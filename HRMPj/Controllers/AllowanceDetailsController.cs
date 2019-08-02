@@ -85,11 +85,20 @@ namespace HRMPj.Controllers
                 };
                 //_context.Add(allowanceDetail);
                 //await _context.SaveChangesAsync();
-                await detailRepository.Save(def);
-                return RedirectToAction(nameof(Index));
+                AllowanceDetail ss = detailRepository.ffff(allowanceDetail.Month, allowanceDetail.Year, allowanceDetail.EmployeeInfoId, allowanceDetail.AllowanceTypeId);
+                if (ss == null)
+                {
+                    await detailRepository.Save(def);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Message = "This Allowance Type is already pay.";
+                }
+              
             }
-            ViewData["AllowanceTypeId"] = new SelectList(allowanceRepository.GetAllowanceList(), "Id", "Id", allowanceDetail.AllowanceTypeId);
-            ViewData["EmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "Id", allowanceDetail.EmployeeInfoId);
+            ViewData["AllowanceTypeId"] = new SelectList(allowanceRepository.GetAllowanceList(), "Id", "Name", allowanceDetail.AllowanceTypeId);
+            ViewData["EmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "EmployeeName", allowanceDetail.EmployeeInfoId);
             return View(allowanceDetail);
         }
 

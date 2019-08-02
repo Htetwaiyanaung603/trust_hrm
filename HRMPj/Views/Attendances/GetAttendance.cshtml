@@ -77,6 +77,9 @@ window.location.href = "@Url.Action("GetAttendance", "Attendances")";
                     <thead>
                         <tr>
                             <th>
+                                No
+                            </th>
+                            <th>
                                 EmployeeName
                             </th>
                             @foreach (var ite in @ViewBag.DayList)
@@ -89,32 +92,37 @@ window.location.href = "@Url.Action("GetAttendance", "Attendances")";
                         </tr>
                     </thead>
                     <tbody>
+                        @{var i = 0;}
                         @foreach (var item in @ViewBag.Employee)
                         {
-                            <tr>
+                            i++;
+                        <tr>
+                            <td>
+                                @i
+                            </td>
+                            <td>
+                                @item.EmployeeName
+                            </td>
+                            @foreach (var status in item.AttDateList)
+                            {
                                 <td>
-                                    @item.EmployeeName
+                                    @if (@status == "Present")
+                                    {<i class="fa fa-check" />}
+                                    else
+                                    if (@status == "Absent")
+                                    {
+
+                                        <i class="fa fa-times" />
+                                    }
+                                    else if (@status == "Leave")
+                                    {
+                                        <b> L </b>
+                                    }
                                 </td>
-                                @foreach (var status in item.AttDateList)
-                                {
-                                    <td>
-                                        @if (@status == "Present")
-                                        {<i class="fa fa-check" />}
-                                        else
-                                          if (@status == "Absent")
-                                        {
-
-                                          <i class="fa fa-times" />
-                                        }
-                                        else if(@status == "Leave")
-                                        {
-                                            <b> L </b>
-                                        }
-                                    </td>
-                                }
+                            }
 
 
-                            </tr>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -169,7 +177,13 @@ window.location.href = "@Url.Action("GetAttendance", "Attendances")";
 
     <script>
         $(function () {
+            $('.metismenu li').removeClass("mm-active");
+            $('.metismenu li ul').removeClass("mm-show");
+            $('.metismenu li ul li a').removeClass("mm-active");
+            $('.metismenu #startup').addClass("mm-active");
+            $('.metismenu  #statyup ul').addClass("mm-show");
 
+            $('.metismenu #attendance').addClass("mm-active");
             $('#example').DataTable();
         });
     </script>

@@ -135,6 +135,13 @@
 
     <script>
         $(function () {
+            $('.metismenu li').removeClass("mm-active");
+            $('.metismenu li ul').removeClass("mm-show");
+            $('.metismenu li ul li a').removeClass("mm-active");
+            $('.metismenu #startup').addClass("mm-active");
+            $('.metismenu  #startup ul').addClass("mm-show");
+
+            $('.metismenu #leaverequestview').addClass("mm-active");
             $('#example').DataTable();
         });
 

@@ -19,7 +19,7 @@ namespace HRMPj.Repository
         bool GetExit(long id);
         List<EmployeeInfo> GetEmployeeListByBranchAndDepartmentId(long branchId,long departmentId);
         List<EmployeeInfo> GetEmployeeListByBranchAndDepartmentIdAndDesignationId(long branchId, long departmentId,long designationId);
-
+        Task UpdateEmp(long empId);
 
     }
 }

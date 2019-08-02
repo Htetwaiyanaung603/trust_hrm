@@ -26,7 +26,7 @@ namespace HRMPj.Models
         public string CreatedBy { get; set; }
         public string UserId { get; set; }
         public long BasicSalary { get; set; }
-        public List<IFormFile> EmployeeProfile { get; set; }
+        public IFormFile EmployeeProfile { get; set; }
         public long BranchId { get; set; }
 
         public long DepartmentId { get; set; }
