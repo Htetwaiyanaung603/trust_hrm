@@ -16,11 +16,11 @@ namespace HRMPj.Models
         public string Nationality { get; set; }
         public string MartialStatus { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public long MobilePhone { get; set; }
+        public string MobilePhone { get; set; }
         public string CurrentAddress { get; set; }
-        public long EmergencyNo { get; set; }
-        public long AccountNo { get; set; }
-        public long ATMNumber { get; set; }
+        public string EmergencyNo { get; set; }
+        public string AccountNo { get; set; }
+        public string ATMNumber { get; set; }
         public Boolean IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }

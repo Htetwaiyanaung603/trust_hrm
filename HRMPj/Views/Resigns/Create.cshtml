@@ -22,11 +22,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>@ViewBag.Message</div>
 
+
+
+
             <div class="position-relative row form-group">
-                <label asp-for="ResignStatus" class="col-sm-2 col-form-label"></label>
+                <label asp-for="Year" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-5">
-                    <input asp-for="ResignStatus" class="form-control" />
-                    <span asp-validation-for="ResignStatus" class="text-danger"></span>
+                    <input asp-for="Year" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
                 </div>
             </div>
             <div class="position-relative row form-group">
@@ -37,29 +40,19 @@
                 </div>
             </div>
             <div class="position-relative row form-group">
-                <label asp-for="Remark" class="col-sm-2 col-form-label"></label>
+                <label asp-for="FromEmployeeInfoId" class="col-sm-2 col-form-label">FromEmployee</label>
                 <div class="col-sm-5">
-                    <input asp-for="Remark" class="form-control" />
-                    <span asp-validation-for="Remark" class="text-danger"></span>
+                    <select asp-for="FromEmployeeInfoId" id="FromEmployeeInfoId" class="form-control" asp-items="ViewBag.FromEmployeeInfoId">
+                        <option>----Select----</option>
+                    </select>
                 </div>
             </div>
             <div class="position-relative row form-group">
-                <label asp-for="Year" class="col-sm-2 col-form-label"></label>
+                <label asp-for="ToEmployeeInfoId"  class="col-sm-2 col-form-label">ToEmployee</label>
                 <div class="col-sm-5">
-                    <input asp-for="Year" class="form-control" />
-                    <span asp-validation-for="Year" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="position-relative row form-group">
-                <label asp-for="FromEmployeeInfoId" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-5">
-                    <select asp-for="FromEmployeeInfoId" class="form-control" asp-items="ViewBag.FromEmployeeInfoId"></select>
-                </div>
-            </div>
-            <div class="position-relative row form-group">
-                <label asp-for="ToEmployeeInfoId" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-5">
-                    <select asp-for="ToEmployeeInfoId" class="form-control" asp-items="ViewBag.ToEmployeeInfoId"></select>
+                    <select asp-for="ToEmployeeInfoId" id="ToEmployeeInfoId" class="form-control">
+                        <option>----Select----</option>
+                    </select>
                 </div>
             </div>
             <div class="position-relative row form-group">
@@ -75,5 +68,41 @@
 
 
 @section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#FromEmployeeInfoId").on("change", function () {
+
+                var param = this.value;
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: "GET",
+                    url: '/Resigns/GetToEmployeeList?FromEmployeeInfoId=' + param,
+
+                    success: function (data) {
+
+                        var html = '<option>--Select--</option>';
+                        var len = data.length;
+                        if (len == 0) {
+                            alert("error");
+                        }
+                        else {
+                            for (var i = 0; i < len; i++) {
+                                html += '<option value="' + data[i].Id + '">'
+                                    + data[i].EmployeeName
+                                    + '</option>';
+                            }
+                            $('#ToEmployeeInfoId').html(html);
+                            if (typeof (callback) == "function") {
+                                callback();
+                            }
+                        }
+
+                    },
+                    complete: function () {
+                    }
+                });
+            });
+        });
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -17,11 +17,14 @@ namespace HRMPj.Controllers
         public readonly ILeaveRequestRepository leaveRequestRepository;
         public readonly ILeaveTypeRepository leaveTypeRepository;
         public readonly IEmployeeInfoRepository employeeInfoRepository;
-        public LeaveRequestsController(ILeaveRequestRepository oi, ILeaveTypeRepository ie, IEmployeeInfoRepository i)
+        public readonly IOverTimeRepository overTimeRepository;
+
+        public LeaveRequestsController(ILeaveRequestRepository oi, ILeaveTypeRepository ie, IEmployeeInfoRepository i, IOverTimeRepository o)
         {
             this.leaveRequestRepository = oi;
             this.leaveTypeRepository = ie;
             this.employeeInfoRepository = i;
+            this.overTimeRepository = o;
         }
 
 
@@ -33,6 +36,7 @@ namespace HRMPj.Controllers
 
         public IActionResult LeaveRequestView()
         {
+          
             return View(leaveRequestRepository.RetrieveLeaveRequestList());
         }
         [HttpPost]
@@ -68,7 +72,17 @@ namespace HRMPj.Controllers
 
             return View(leaveRequest);
         }
+        [HttpGet]
+        public IActionResult GetToEmployeeList(long FromEmployeeInfoId)
+        {
 
+            List<EmployeeInfo> employeeList = overTimeRepository.GetEmployeeListByFromEmployeeId(FromEmployeeInfoId);
+            var d = JsonConvert.SerializeObject(employeeList, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            });
+            return Content(d, "application/json");
+        }
         // GET: LeaveRequests/Create
         public IActionResult Create()
         {

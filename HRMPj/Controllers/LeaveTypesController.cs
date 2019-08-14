@@ -119,6 +119,7 @@ namespace HRMPj.Controllers
             {
                 try
                 {
+                    leaveType.CreatedDate = DateTime.Now;
                     //_context.Update(leaveType);
                     //await _context.SaveChangesAsync();
                     await leaveTypeRepository.Update(leaveType);

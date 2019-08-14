@@ -17,11 +17,13 @@ namespace HRMPj.Controllers
         private readonly IEmployeeInfoRepository employeeInfoRepository;
         private readonly IResignRepository resignRepository;
         private readonly IBranchRepository branchRepository;
-        public ResignsController(IEmployeeInfoRepository e, IResignRepository a,IBranchRepository b)
+        private readonly IOverTimeRepository overTimeRepository;
+        public ResignsController(IEmployeeInfoRepository e, IResignRepository a,IBranchRepository b,IOverTimeRepository o)
         {
             this.resignRepository = a;
             this.employeeInfoRepository = e;
             this.branchRepository = b;
+            this.overTimeRepository = o;
             
         }
         //    private readonly ApplicationDbContext _context;
@@ -94,7 +96,17 @@ namespace HRMPj.Controllers
 
             return View(resign);
         }
+        [HttpGet]
+        public IActionResult GetToEmployeeList(long FromEmployeeInfoId)
+        {
 
+            List<EmployeeInfo> employeeList = overTimeRepository.GetEmployeeListByFromEmployeeId(FromEmployeeInfoId);
+            var d = JsonConvert.SerializeObject(employeeList, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            });
+            return Content(d, "application/json");
+        }
         // GET: Resigns/Create
         public IActionResult Create()
         {
@@ -108,16 +120,16 @@ namespace HRMPj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ResignDate,ResignStatus,Comment,Remark,CreatedDate,ApprovedDate,Status,Year,FromEmployeeInfoId,ToEmployeeInfoId")] ResignViewModel resign)
+        public async Task<IActionResult> Create([Bind("Id,ResignDate,Comment,CreatedDate,ApprovedDate,Status,Year,FromEmployeeInfoId,ToEmployeeInfoId")] ResignViewModel resign)
         {
             if (ModelState.IsValid)
             {
                 Resign re = new Resign()
                 {
                     ResignDate = DateTime.Now,
-                    ResignStatus = resign.ResignStatus,
+                   
                     Comment = resign.Comment,
-                    Remark = resign.Remark,
+                   
                     CreatedDate = DateTime.Now,
                     ApprovedDate = DateTime.Now,
                     Status = "Pending",

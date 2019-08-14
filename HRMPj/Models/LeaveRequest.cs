@@ -13,7 +13,9 @@ namespace HRMPj.Models
         [Key]
         public long Id { get; set; }
         public long CurrentYear { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MMMM/yyyy}")]
         public DateTime LeaveFromDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MMMM/yyyy}")]
         public DateTime LeaveToDate { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
         public decimal LeaveTotalDay { get; set; }

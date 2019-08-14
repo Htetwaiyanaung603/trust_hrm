@@ -16,6 +16,7 @@ namespace HRMPj.Models
         public long AmmountPerDay { get; set; }
         public string Status { get; set; }
         public string CreatedBy { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MMMM/yyyy}")]
         public DateTime CreatedDate { get; set; }
         public ICollection<AllowanceDetail> AllowanceDetails { get; set; }
 

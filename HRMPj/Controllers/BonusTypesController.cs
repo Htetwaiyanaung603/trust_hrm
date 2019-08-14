@@ -74,8 +74,8 @@ namespace HRMPj.Controllers
                 {
                     TypeName = bonusType.TypeName,
                     Amount = bonusType.Amount,
-                    IsActive = bonusType.IsActive,
-                    Year = bonusType.Year,
+                    IsActive = false,
+                    Year = "",
                     CreatedBy = userId,
                     CreatedDate = DateTime.Now
                 };
@@ -120,6 +120,9 @@ namespace HRMPj.Controllers
             {
                 try
                 {
+                    var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    bonusType.CreatedDate = DateTime.Now;
+                    bonusType.CreatedBy = userId;
                     //_context.Update(bonusType);
                     //await _context.SaveChangesAsync();
                     await bonusTypeRepository.Update(bonusType);

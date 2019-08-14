@@ -63,6 +63,13 @@ namespace HRMPj.Repository
             }
         }
 
+        public List<EmployeeInfo> GetEmployeeListByFromEmployeeId(long empId)
+        {
+            long empList = context.EmployeeInfos.Where(b => b.Id == empId).Select(i => i.DepartmentId).Single();
+            List<EmployeeInfo> emp = context.EmployeeInfos.Where(d => d.DepartmentId == empList && d.Designation.Name == "Manager").ToList();
+            return emp;
+        }
+
         public bool GetExit(long id)
         {
             var dd = context.OverTimes.Any(e => e.Id == id);

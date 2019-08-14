@@ -17,5 +17,6 @@ namespace HRMPj.Repository
         List<OverTime> GetDelete();
         OverTime GetDeleteList(long id);
         bool GetExit(long id);
+        List<EmployeeInfo> GetEmployeeListByFromEmployeeId(long empId);
     }
 }

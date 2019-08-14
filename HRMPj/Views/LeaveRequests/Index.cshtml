@@ -30,9 +30,7 @@
                                 <th>
                                     No
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.CurrentYear)
-                                </th>
+                               
                                 <th>
                                     @Html.DisplayNameFor(model => model.LeaveFromDate)
                                 </th>
@@ -40,7 +38,7 @@
                                     @Html.DisplayNameFor(model => model.LeaveToDate)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.LeaveTotalDay)
+                                    TotalDay
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.HalfDay)
@@ -49,11 +47,9 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.Status)
                                 </th>
+                               
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Description)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.UnPaidLeaveStatus)
+                                   UnPaidLeave
                                 </th>
 
                                 <th>
@@ -61,13 +57,13 @@
                                 </th>
 
                                 <th>
-                                    @Html.DisplayNameFor(model => model.FromEmployeeInfo)
+                                   FromEmployee
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.ToEmployeeInfo)
+                                   ToEmployee
                                 </th>
-                                <th></th>
-                                <th></th>
+                              
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -79,9 +75,7 @@
                                 <td>
                                     @i
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CurrentYear)
-                                </td>
+                               
                                 <td>
                                     @Html.DisplayFor(modelItem => item.LeaveFromDate)
                                 </td>
@@ -98,24 +92,24 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Status)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Description)
-                                </td>
+                                
                                 <td>
                                     @Html.DisplayFor(modelItem => item.UnPaidLeaveStatus)
                                 </td>
-
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LeaveType.TypeName)
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.FromEmployeeInfo.EmployeeName)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ToEmployeeInfo.EmployeeName)
                                 </td>
-                                <td></td>
+                               
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Delete</a>
+                                    @*<a asp-action="Edit" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Details</a> |*@
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-danger">Delete</a>
                                 </td>
                             </tr>
                             }

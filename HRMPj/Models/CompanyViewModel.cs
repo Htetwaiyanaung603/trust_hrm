@@ -11,9 +11,10 @@ namespace HRMPj.Models
     {
         public long Id { get; set; }
         public string CompanyName { get; set; }
-        // [DisplayFormat(DataFormatString = "{0:MMMM/dd/yyyy HH:mm tt")]
-        [Display(Name = "DateTime")]
-        [DataType(DataType.Date)]
+
+        //[Display(Name = "DateTime")]
+        //[DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MMMM/yyyy}")]
         public DateTime CreatedDate { get; set; }
 
        

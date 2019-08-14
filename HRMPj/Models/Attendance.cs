@@ -12,8 +12,10 @@ namespace HRMPj.Models
     {
         [Key]
         public long Id { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MMMM/yyyy}")]
         public DateTime AttendanceDate { get; set; }
         public string Status { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MMMM/yyyy}")]
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public long BranchId { get; set; }

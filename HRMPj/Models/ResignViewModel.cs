@@ -9,9 +9,9 @@ namespace HRMPj.Models
     {
         public long Id { get; set; }
         public DateTime ResignDate { get; set; }
-        public string ResignStatus { get; set; }
+       
         public string Comment { get; set; }
-        public string Remark { get; set; }
+       
         public DateTime CreatedDate { get; set; }
         public DateTime ApprovedDate { get; set; }
         public string Status { get; set; }

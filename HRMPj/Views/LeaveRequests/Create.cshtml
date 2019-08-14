@@ -25,7 +25,9 @@
             <div class="position-relative row form-group">
                 <label asp-for="FromEmployeeInfoId " class="col-sm-2 col-form-label">FromEmployeeInfoId</label>
                 <div class="col-sm-5">
-                    <select asp-for="FromEmployeeInfoId " id="EmpId" class="form-control" asp-items="ViewBag.FromEmployeeInfoId"></select>
+                    <select asp-for="FromEmployeeInfoId " id="FromEmployeeInfoId" class="form-control" asp-items="ViewBag.FromEmployeeInfoId">
+                        <option>----Select----</option>
+                    </select>
                     <span asp-validation-for="FromEmployeeInfoId " class="text-danger"></span>
 
                 </div>
@@ -110,7 +112,9 @@
 
                 <div class="col-sm-5">
 
-                    <select asp-for="ToEmployeeInfoId " id="ToEmpId" class="form-control" asp-items="ViewBag.ToEmployeeInfoId"></select>
+                    <select asp-for="ToEmployeeInfoId " id="ToEmployeeInfoId" class="form-control">
+                        <option>----Select----</option>
+                    </select>
                     <span asp-validation-for="ToEmployeeInfoId  " class="text-danger"></span>
 
 
@@ -123,7 +127,7 @@
                     <a asp-action="Index" class="mb-2 mr-2 btn-icon btn-pill btn btn-outline-primary">Back to List</a>
                 </div>
             </div>
-            
+
         </form>
     </div>
 </div>
@@ -213,7 +217,7 @@
 
                 if (!$("#UnPaidLeaveStatus").is(":checked")) {
                     if ($('#LeaveRemainDay').val() < diff || $('#LeaveRemainDay').val() == 0) {
-                       
+
                         swal("Rejected", "Your Leave Remain day is limited!", "error");
                         diff = 0;
                     }
@@ -225,6 +229,41 @@
         }
 
     </script>
+    <script>
+        $(document).ready(function () {
+            $("#FromEmployeeInfoId").on("change", function () {
 
+                var param = this.value;
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: "GET",
+                    url: '/LeaveRequests/GetToEmployeeList?FromEmployeeInfoId=' + param,
+
+                    success: function (data) {
+
+                        var html = '<option>--Select--</option>';
+                        var len = data.length;
+                        if (len == 0) {
+                            alert("error");
+                        }
+                        else {
+                            for (var i = 0; i < len; i++) {
+                                html += '<option value="' + data[i].Id + '">'
+                                    + data[i].EmployeeName
+                                    + '</option>';
+                            }
+                            $('#ToEmployeeInfoId').html(html);
+                            if (typeof (callback) == "function") {
+                                callback();
+                            }
+                        }
+
+                    },
+                    complete: function () {
+                    }
+                });
+            });
+        });
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

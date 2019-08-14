@@ -23,18 +23,25 @@ namespace HRMPj.Repository
             await context.SaveChangesAsync();
         }
 
-        public List<AttendancdRecordViewModel> GetAttendaceSearchList(long branchId, long departmentId,DateTime date1,DateTime date2)
+        public List<AttendancdRecordViewModel> GetAttendaceSearchList(long branchId, long departmentId,DateTime date1,DateTime date2,List<int> daylist)
         {
           
             List<EmployeeInfo> blist = context.Attendances.Include(d => d.EmployeeInfo).Where(b => b.BranchId == branchId && b.DepartmentId == departmentId && b.AttendanceDate >= date1 && b.AttendanceDate <= date2).Select(d=>d.EmployeeInfo).Distinct().ToList();
             List<AttendancdRecordViewModel> attRecordList = new List<AttendancdRecordViewModel>();
+            List<String> attList = new List<string>();
             foreach (EmployeeInfo ei in blist)
             {
-                List<String> attList = context.Attendances.Where(a => a.AttendanceDate >= date1 && a.AttendanceDate <= date2 && a.EmployeeInfoId == ei.Id).OrderBy(a=>a.AttendanceDate).Select(a => a.Status).ToList();
-                if(attList==null)
+                attList = new List<string>();
+                foreach(var s in daylist)
                 {
-                    attList.Add("Absent");
+                    string att = context.Attendances.Where(a => a.AttendanceDate >= date1 && a.AttendanceDate <= date2 && a.EmployeeInfoId == ei.Id && a.AttendanceDate.Day == s).Select(a => a.Status).SingleOrDefault();
+                    if (att == null)
+                    {
+                        att = "Absent";
+                    }
+                    attList.Add(att);
                 }
+               
                 AttendancdRecordViewModel attRecord = new AttendancdRecordViewModel()
                 {
                     EmployeeId = ei.Id,

@@ -68,25 +68,46 @@ namespace HRMPj.Controllers
             return Content(d, "application/json");
         }
         // GET: EmployeeInfoes/Details/5
-        //public async Task<IActionResult> Details(long? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public IActionResult Details(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var employeeInfo = await _context.EmployeeInfos
-        //        .Include(e => e.Branch)
-        //        .Include(e => e.Department)
-        //        .Include(e => e.Designation)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (employeeInfo == null)
-        //    {
-        //        return NotFound();
-        //    }
+            //var employeeInfo = await _context.EmployeeInfos
+            //    .Include(e => e.Branch)
+            //    .Include(e => e.Department)
+            //    .Include(e => e.Designation)
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            var employeeInfo = employeeInfoRepository.GetDetail().FirstOrDefault(m => m.Id == id);
+            if (employeeInfo == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(employeeInfo);
-        //}
+            return View(employeeInfo);
+        }
+        public IActionResult Index1(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            //var employeeInfo = await _context.EmployeeInfos
+            //    .Include(e => e.Branch)
+            //    .Include(e => e.Department)
+            //    .Include(e => e.Designation)
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            var employeeInfo = employeeInfoRepository.GetDetail().FirstOrDefault(m => m.Id == id);
+            if (employeeInfo == null)
+            {
+                return NotFound();
+            }
+
+            return View(employeeInfo);
+        }
 
         // GET: EmployeeInfoes/Create
         public IActionResult Create()
@@ -144,6 +165,7 @@ namespace HRMPj.Controllers
                             IsActive = employee.IsActive,
                             CreatedDate = DateTime.Now,
                             CreatedBy = userId,
+                            UserId=userId,
                             Document = teaList,
                             DepartmentId=employee.DepartmentId,
                             DesignationId=employee.DesignationId,

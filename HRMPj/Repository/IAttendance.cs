@@ -17,7 +17,7 @@ namespace HRMPj.Repository
         List<Attendance> GetDelete();
         Attendance GetDeleteList(long id);
         bool GetExit(long id);
-        List<AttendancdRecordViewModel> GetAttendaceSearchList(long branchId, long departmentId,DateTime date1,DateTime date2);
+        List<AttendancdRecordViewModel> GetAttendaceSearchList(long branchId, long departmentId,DateTime date1,DateTime date2,List<int> date3);
         List<int> GetDayList( DateTime date1, DateTime date2);
 
     }

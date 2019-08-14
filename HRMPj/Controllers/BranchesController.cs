@@ -113,7 +113,7 @@ namespace HRMPj.Controllers
             {
                 return NotFound();
             }
-            ViewData["CompanyId"] = new SelectList(await companyRepository.GetCompanyListc(), "Id", "Id", branch.CompanyId);
+            ViewData["CompanyId"] = new SelectList(await companyRepository.GetCompanyListc(), "Id", "CompanyName", branch.CompanyId);
             return View(branch);
         }
 
@@ -150,7 +150,7 @@ namespace HRMPj.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CompanyId"] = new SelectList(await companyRepository.GetCompanyListc(), "Id", "Id", branch.CompanyId);
+            ViewData["CompanyId"] = new SelectList(await companyRepository.GetCompanyListc(), "Id", "CompanyName", branch.CompanyId);
             return View(branch);
         }
 

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HRMPj.Data;
 using HRMPj.Models;
 using HRMPj.Repository;
+using Newtonsoft.Json;
 
 namespace HRMPj.Controllers
 {
@@ -54,6 +55,17 @@ namespace HRMPj.Controllers
 
             return View(overTime);
         }
+        [HttpGet]
+        public IActionResult GetToEmployeeList(long FromEmployeeInfoId)
+        { 
+
+            List<EmployeeInfo> employeeList = overTimeRepository.GetEmployeeListByFromEmployeeId(FromEmployeeInfoId);
+            var d = JsonConvert.SerializeObject(employeeList, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            });
+            return Content(d, "application/json");
+        }
 
         // GET: OverTimes/Create
         public IActionResult Create()
@@ -78,7 +90,7 @@ namespace HRMPj.Controllers
                     OTStartTime = overTime.OTStartTime,
                     OTEndTime = overTime.OTEndTime,
                     Status = overTime.Status,
-                    ApprovedDate = overTime.ApprovedDate,
+                    ApprovedDate = DateTime.Now,
                     OTTime = overTime.OTTime,
                     Year=overTime.Year,
                     FromEmployeeInfoId = overTime.FromEmployeeInfoId,

@@ -61,7 +61,7 @@ namespace HRMPj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Amount,Limit,MaxRange,MinRange,Remark,CreatedDate")] OverTimeSettingViewModel overTimeSetting)
+        public async Task<IActionResult> Create( OverTimeSettingViewModel overTimeSetting)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace HRMPj.Controllers
                     Amount = overTimeSetting.Amount,
                     Hour = overTimeSetting.Hour,
                     Remark = overTimeSetting.Remark,
-                    CreatedDate = overTimeSetting.CreatedDate
+                    CreatedDate = DateTime.Now
                 };
                 await overTimeSettingRepository.Save(ov);
                 return RedirectToAction(nameof(Index));
@@ -102,7 +102,7 @@ namespace HRMPj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Amount,Limit,MaxRange,MinRange,Remark,CreatedDate")] OverTimeSetting overTimeSetting)
+        public async Task<IActionResult> Edit(long id,OverTimeSetting overTimeSetting)
         {
             if (id != overTimeSetting.Id)
             {
@@ -113,6 +113,7 @@ namespace HRMPj.Controllers
             {
                 try
                 {
+                    overTimeSetting.CreatedDate = DateTime.Now;
                     //_context.Update(overTimeSetting);
                     //await _context.SaveChangesAsync();
                     await overTimeSettingRepository.Update(overTimeSetting);

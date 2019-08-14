@@ -105,7 +105,7 @@ namespace HRMPj.Controllers
             {
                 return NotFound();
             }
-            ViewData["DepartmentId"] = new SelectList( designationRepository.GetDesignationList(), "Id", "Id", designation.DepartmentId);
+            ViewData["DepartmentId"] = new SelectList(departmentRepository.GetDepartmentList(), "Id", "Name", designation.DepartmentId);
             return View(designation);
         }
 
@@ -125,7 +125,6 @@ namespace HRMPj.Controllers
             {
                 try
                 {
-
                     await designationRepository.Update(designation);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -141,7 +140,7 @@ namespace HRMPj.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentId"] = new SelectList(designationRepository.GetDesignationList(), "Id", "Id", designation.DepartmentId);
+            ViewData["DepartmentId"] = new SelectList(departmentRepository.GetDepartmentList(), "Id", "Name", designation.DepartmentId);
             return View(designation);
         }
 

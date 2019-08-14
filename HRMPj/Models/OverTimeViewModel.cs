@@ -12,6 +12,7 @@ namespace HRMPj.Models
         public DateTime OTStartTime { get; set; }
         public DateTime OTEndTime { get; set; }
         public string Status { get; set; }
+      
         public DateTime ApprovedDate { get; set; }
         public int OTTime { get; set; }
         public int Year { get; set; }

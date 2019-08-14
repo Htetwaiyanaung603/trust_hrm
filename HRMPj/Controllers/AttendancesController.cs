@@ -66,10 +66,10 @@ namespace HRMPj.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult GetAttendance(AttendanceSearchViewModel search)
         {
-
-            List<AttendancdRecordViewModel> searchEmployee = attendanceRepository.GetAttendaceSearchList(search.BranchId, search.DepartmentId,search.FromDate,search.ToDate);
+            List<int> dayLiat = attendanceRepository.GetDayList(search.FromDate, search.ToDate);
+            List<AttendancdRecordViewModel> searchEmployee = attendanceRepository.GetAttendaceSearchList(search.BranchId, search.DepartmentId,search.FromDate,search.ToDate,dayLiat);
             ViewBag.Employee = searchEmployee;
-            ViewBag.DayList = attendanceRepository.GetDayList(search.FromDate, search.ToDate);
+            ViewBag.DayList = dayLiat;
             return View();
         }
 

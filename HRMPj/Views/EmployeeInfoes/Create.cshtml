@@ -3,7 +3,7 @@
 @{
 
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Designation";
+    ViewData["Title"] = "Employee";
 }
 
 
@@ -62,8 +62,12 @@
                 </div>
                 <label asp-for="MartialStatus" class="col-sm-2 col-form-label">MartialStatus</label>
                 <div class="col-sm-4">
-                    <input asp-for="MartialStatus" id="MartialStatus" placeholder="With a placeholder" type="text" class="form-control" />
-                    <span asp-validation-for="MartialStatus " class="text-danger"></span>
+                    <select asp-for="MartialStatus" class="form-control">
+                        <option>Single</option>
+                        <option>Married</option>
+                    </select>
+                    <span asp-validation-for="MartialStatus  " class="text-danger"></span>
+
 
                 </div>
             </div>

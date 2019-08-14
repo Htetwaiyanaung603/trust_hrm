@@ -45,17 +45,22 @@
                                         <input asp-for="Input.RememberMe" />
                                         @Html.DisplayNameFor(m => m.Input.RememberMe)
                                     </label>
+                                    <br>
+                                    <a asp-area="Identity" asp-page="/Account/Register">Create New User Account</a>
                                 </div>
                             </div>
                             <div class="divider"></div>
                         </div>
                         <div class="modal-footer">
-
+                           
+                            
+                            
                             <div class="float-left">
                                 <div class="form-group">
-                                    <p>
-                                        <a asp-page="./ForgotPassword">Forgot your password?</a>
-                                    </p>
+                                    @*<p>
+            <a asp-page="./ForgotPassword">Forgot your password?</a>
+        </p>*@
+                                   
 
                                 </div>
                             </div>

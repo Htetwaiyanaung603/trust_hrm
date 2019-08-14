@@ -32,55 +32,18 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.EmployeeName)
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.FatherName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Gender)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.NRC)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Nationality)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MartialStatus)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.DateOfBirth)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.MobilePhone)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.CurrentAddress)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.EmergencyNo)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.AccountNo)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.ATMNumber)
-                                </th>
+
                                 <th>
                                     @Html.DisplayNameFor(model => model.BasicSalary)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.IsActive)
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.CreatedDate)
-                                </th>
 
-                                <th>
-                                    @Html.DisplayNameFor(model => model.EmployeeProfile)
-                                </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Branch)
                                 </th>
+                                
                                 <th>
                                     @Html.DisplayNameFor(model => model.Department)
                                 </th>
@@ -103,51 +66,18 @@
                                     @Html.DisplayFor(modelItem => item.EmployeeName)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.FatherName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Gender)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NRC)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Nationality)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MartialStatus)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DateOfBirth)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MobilePhone)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CurrentAddress)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.EmergencyNo)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.AccountNo)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ATMNumber)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.BasicSalary)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.IsActive)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CreatedDate)
-                                </td>
+                                @*<td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>*@
 
-                                <td>
-                                    <img src="@item.EmployeeProfile" width="30px" height="30px" />
-                                </td>
+                                @*<td>
+            <img src="@item.EmployeeProfile" width="120px" height="120px" />
+        </td>*@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Branch.BranchName)
                                 </td>
@@ -158,9 +88,9 @@
                                     @Html.DisplayFor(modelItem => item.Designation.Name)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Edit</a>
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Details</a>
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Delete</a>
+                                    @*<a asp-action="Edit" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Edit</a>*@
+                                    <a asp-action="Index1" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Profile</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-danger">Delete</a>
                                 </td>
                             </tr>
                             }

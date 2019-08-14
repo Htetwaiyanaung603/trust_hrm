@@ -87,10 +87,22 @@ namespace HRMPj.Repository
 
         public List<LeaveRequest> RetrieveLeaveRequestList()
         {
-            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            long EmployeeId = context.EmployeeInfos.Where(e => e.UserId == userId).SingleOrDefault().Id;
-            List<LeaveRequest> leave = context.LeaveRequests.Include(l => l.LeaveType).Include(l => l.FromEmployeeInfo).Where(l => l.ToEmployeeInfoId == EmployeeId && l.Status == LeaveStatus.Pending.ToString()).ToList();
-            return leave;
+            try
+            {
+                var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                long EmployeeId = context.EmployeeInfos.Where(e => e.UserId == userId).SingleOrDefault().Id;
+                if (EmployeeId == 0)
+                {
+                    List<LeaveRequest> leas = context.LeaveRequests.ToList();
+                    return leas;
+                }
+                List<LeaveRequest> leave = context.LeaveRequests.Include(l => l.LeaveType).Include(l => l.FromEmployeeInfo).Where(l => l.ToEmployeeInfoId == EmployeeId && l.Status == LeaveStatus.Pending.ToString()).ToList();
+                return leave;
+            }catch 
+            {
+                List<LeaveRequest> leas = context.LeaveRequests.ToList();
+                return leas;
+            }
         }
 
        

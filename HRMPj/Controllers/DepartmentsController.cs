@@ -98,7 +98,7 @@ namespace HRMPj.Controllers
             {
                 return NotFound();
             }
-            ViewData["BranchId"] = new SelectList(branchRepository.GetBranchList(), "Id", "Id", department.BranchId);
+            ViewData["BranchId"] = new SelectList(branchRepository.GetBranchList(), "Id", "BranchName", department.BranchId);
             return View(department);
         }
 

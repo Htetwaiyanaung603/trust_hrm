@@ -25,7 +25,7 @@
                 <label asp-for="OTDate" class="col-sm-2 col-form-label">OT Date</label>
                 <div class="col-sm-5">
                     <div class="input-group date" id="datepicker">
-                        <input asp-for="OTDate" placeholder="Enter date" class="form-control" />
+                        <input asp-for="OTDate" placeholder="Enter date" type="date" class="form-control" />
                         <span class="input-group-addon"><span class="metismenu-icon pe-7s-timer"></span></span>
 
                     </div>
@@ -69,11 +69,15 @@
             <div class="position-relative row form-group">
                 <label asp-for="FromEmployeeInfoId" class="col-sm-2 col-form-label">FromEmployeeInfoId</label>
                 <div class="col-sm-4">
-                    <select asp-for="FromEmployeeInfoId" id="FromEmployeeInfoId" class="form-control" asp-items="ViewBag.FromEmployeeInfoId"></select>
+                    <select asp-for="FromEmployeeInfoId" id="FromEmployeeInfoId" class="form-control" asp-items="ViewBag.FromEmployeeInfoId">
+                        <option>----Select----</option>
+                    </select>
                 </div>
                 <label asp-for="ToEmployeeInfoId" class="col-sm-2 col-form-label">ToEmployeeInfoId</label>
                 <div class="col-sm-4">
-                    <select asp-for="ToEmployeeInfoId" id="ToEmployeeInfoId" class="form-control" asp-items="ViewBag.ToEmployeeInfoId"></select>
+                    <select asp-for="ToEmployeeInfoId" id="ToEmployeeInfoId" class="form-control">
+                        <option>----Select----</option>
+                    </select>
                 </div>
             </div>
             <div class="position-relative row form-group">
@@ -136,15 +140,51 @@
                     $('#OTTime').val("");
                 }
             });
-         
+
         });
 
         $(function () {
-            
+
             $("#datepicker").datetimepicker({
                 //format: "DD/MM/YYYY"
-                format : "YYYY",viewMode : "years"
+                format: "YYYY", viewMode: "years"
 
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#FromEmployeeInfoId").on("change", function () {
+
+                var param = this.value;
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: "GET",
+                    url: '/OverTimes/GetToEmployeeList?FromEmployeeInfoId=' + param,
+
+                    success: function (data) {
+
+                        var html = '<option>--Select--</option>';
+                        var len = data.length;
+                        if (len == 0) {
+                            alert("error");
+                        }
+                        else {
+                            for (var i = 0; i < len; i++) {
+                                html += '<option value="' + data[i].Id + '">'
+                                    + data[i].EmployeeName
+                                    + '</option>';
+                            }
+                            $('#ToEmployeeInfoId').html(html);
+                            if (typeof (callback) == "function") {
+                                callback();
+                            }
+                        }
+
+                    },
+                    complete: function () {
+                    }
+                });
             });
         });
     </script>

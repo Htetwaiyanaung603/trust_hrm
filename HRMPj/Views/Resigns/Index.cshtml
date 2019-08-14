@@ -34,18 +34,12 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.ResignDate)
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.ResignStatus)
-                                </th>
+                               
                                 <th>
                                     @Html.DisplayNameFor(model => model.Comment)
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Remark)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.CreatedDate)
-                                </th>
+                               
+                               
                                 <th>
                                     @Html.DisplayNameFor(model => model.ApprovedDate)
                                 </th>
@@ -76,18 +70,12 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ResignDate)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ResignStatus)
-                                </td>
+                               
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Comment)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Remark)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CreatedDate)
-                                </td>
+                               
+                               
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ApprovedDate)
                                 </td>
@@ -104,7 +92,7 @@
                                     @Html.DisplayFor(modelItem => item.ToEmployeeInfo.EmployeeName)
                                 </td>
                                 <td>
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-primary">Delete</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="mb-2 mr-2 btn-icon btn-shadow btn-outline-2x btn btn-outline-danger">Delete</a>
                                 </td>
                             </tr>
                             }

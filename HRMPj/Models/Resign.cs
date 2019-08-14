@@ -15,9 +15,9 @@ namespace HRMPj.Models
         public long Id { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}")]
         public DateTime ResignDate { get; set; }
-        public string ResignStatus { get; set; }
+       
         public string Comment { get; set; }
-        public string Remark { get; set; }
+       
         [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}")]
         public DateTime CreatedDate { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}")]

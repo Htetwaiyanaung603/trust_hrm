@@ -15,6 +15,7 @@ namespace HRMPj.Models
         public long Id { get; set; }
         public string Name { get; set; }
         public string Remark { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MMMM/yyyy}")]
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         [ForeignKey("DepartmentId")]

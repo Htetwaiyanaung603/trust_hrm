@@ -14,6 +14,7 @@ namespace HRMPj.Models
         public long Id { get; set; }
         public string BranchName { get; set; }
         public string Address { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MMMM/yyyy}")]
         public DateTime CreatedDate { get; set; }
         [ForeignKey("CompanyId")]
         public long CompanyId { get; set; }

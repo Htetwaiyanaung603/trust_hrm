@@ -72,7 +72,7 @@ namespace HRMPj.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Month,Year,AllowanceTypeId,EmployeeInfoId")] AllowanceDetailViewModel allowanceDetail)
+        public async Task<IActionResult> Create(AllowanceDetailViewModel allowanceDetail)
         {
             if (ModelState.IsValid)
             {
@@ -85,17 +85,17 @@ namespace HRMPj.Controllers
                 };
                 //_context.Add(allowanceDetail);
                 //await _context.SaveChangesAsync();
-                AllowanceDetail ss = detailRepository.ffff(allowanceDetail.Month, allowanceDetail.Year, allowanceDetail.EmployeeInfoId, allowanceDetail.AllowanceTypeId);
-                if (ss == null)
-                {
+              //  AllowanceDetail ss = detailRepository.ffff(allowanceDetail.Month, allowanceDetail.Year, allowanceDetail.EmployeeInfoId, allowanceDetail.AllowanceTypeId);
+                //if (ss == null)
+                //{
                     await detailRepository.Save(def);
                     return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    ViewBag.Message = "This Allowance Type is already pay.";
-                }
-              
+                //}
+                //else
+                //{
+                //    ViewBag.Message = "This Allowance Type is already pay.";
+                //}
+
             }
             ViewData["AllowanceTypeId"] = new SelectList(allowanceRepository.GetAllowanceList(), "Id", "Name", allowanceDetail.AllowanceTypeId);
             ViewData["EmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "EmployeeName", allowanceDetail.EmployeeInfoId);
@@ -116,8 +116,8 @@ namespace HRMPj.Controllers
             {
                 return NotFound();
             }
-            ViewData["AllowanceTypeId"] = new SelectList(allowanceRepository.GetAllowanceList(), "Id", "Id", allowanceDetail.AllowanceTypeId);
-            ViewData["EmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "Id", allowanceDetail.EmployeeInfoId);
+            ViewData["AllowanceTypeId"] = new SelectList(allowanceRepository.GetAllowanceList(), "Id", "Name", allowanceDetail.AllowanceTypeId);
+            ViewData["EmployeeInfoId"] = new SelectList(employeeInfoRepository.GetEmployeeInfoList(), "Id", "EmployeeName", allowanceDetail.EmployeeInfoId);
             return View(allowanceDetail);
         }
 
